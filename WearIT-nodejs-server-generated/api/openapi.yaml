@@ -1,0 +1,687 @@
+openapi: 3.0.0
+info:
+  title: WearIT API
+  description: Software Engineering I WearIT API
+  contact:
+    name: Team 22
+    email: christoscs@ece.auth.gr
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: http://issel10.ee.auth.gr:8677
+paths:
+  /users/{user-id}/categories:
+    get:
+      summary: Get all categories for a user
+      description: |
+        FR1 - The user must be able to manage their virtual wardrobe.
+        Displays the categories to the user
+      operationId: getCategories
+      parameters:
+      - name: user-id
+        in: path
+        description: ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+                x-content-type: application/json
+      x-swagger-router-controller: Default
+  /users/{user-id}/categories/{category-name}/garments:
+    get:
+      summary: Get all garments in a specific category for a user
+      description: |
+        FR1 - The user must be able to manage their virtual wardrobe.
+        Displays the garments of a category to the user
+      operationId: getCategoryGarments
+      parameters:
+      - name: user-id
+        in: path
+        description: ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: category-name
+        in: path
+        description: Name of the category
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Garment'
+                x-content-type: application/json
+      x-swagger-router-controller: Default
+    post:
+      summary: Add a new garment to a specific category for a user
+      description: |
+        FR1 - The user must be able to manage their virtual wardrobe.
+        Add a new garment to a specific category for a user
+      operationId: addGarment
+      parameters:
+      - name: user-id
+        in: path
+        description: ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: category-name
+        in: path
+        description: Name of the category
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Garment'
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Garment'
+      x-swagger-router-controller: Default
+  /users/{user-id}/categories/{category-name}/garments/{name}:
+    get:
+      summary: Get a specific garment in a specific category for a user
+      description: |
+        FR1 - The user must be able to manage their virtual wardrobe.
+        Retrieve a specific garment in a specific category for a user.
+      operationId: getGarment
+      parameters:
+      - name: user-id
+        in: path
+        description: ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: category-name
+        in: path
+        description: Name of the category
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: Name of the garment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Garment'
+      x-swagger-router-controller: Default
+    put:
+      summary: Edit a specific garment in a specific category for a user
+      description: |
+        FR1 - The user must be able to manage their virtual wardrobe.
+        Edit a specific garment in a specific category for a user
+      operationId: editGarment
+      parameters:
+      - name: user-id
+        in: path
+        description: ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: category-name
+        in: path
+        description: Name of the category
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: Name of the garment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Garment'
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Garment'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Remove a specific garment in a specific category for a user
+      description: |
+        FR1 - The user must be able to manage their virtual wardrobe.
+        Remove a specific garment in a specific category for a user
+      operationId: deleteGarment
+      parameters:
+      - name: user-id
+        in: path
+        description: ID of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: category-name
+        in: path
+        description: Name of the category
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: Name of the garment
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Default
+  /users/{user-id}/outfits:
+    post:
+      summary: The user adds an outfit
+      description: |
+        FR7-The user must be able to save outfits.
+      operationId: createOutfit
+      parameters:
+      - name: user-id
+        in: path
+        description: user that creates the outfit
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Outfit'
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Outfit'
+      x-swagger-router-controller: Default
+  /users/{user-id}/outfits/{name}:
+    get:
+      summary: Retrieve outfit
+      operationId: getOutfit
+      parameters:
+      - name: user-id
+        in: path
+        description: the id of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: the name of the outfit
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Outfit'
+      x-swagger-router-controller: Default
+    put:
+      summary: The user updates an outfit
+      description: |
+        FR8-The user must be able to edit saved outfits.
+      operationId: updateOutfit
+      parameters:
+      - name: user-id
+        in: path
+        description: user that updates the outfit
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: the name of the outfit
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Outfit'
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Outfit'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Delete outfit from user account
+      description: |
+        FR9 - The user must be able to delete saved outfits.
+      operationId: deleteOutfit
+      parameters:
+      - name: user-id
+        in: path
+        description: user that deletes the outfit
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: name
+        in: path
+        description: the name of the outfit
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Default
+  /users/{user-id}/calendar:
+    get:
+      summary: Retrieve user's calendar
+      description: |
+        FR6-The user must be able to plan their future outfits.
+      operationId: getUserCalendar
+      parameters:
+      - name: user-id
+        in: path
+        description: the id of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+                x-content-type: application/json
+      x-swagger-router-controller: Default
+    post:
+      summary: Add a new event to the user's calendar
+      description: |
+        FR6-The user must be able to plan their future outfits.
+      operationId: addUserCalendarEvent
+      parameters:
+      - name: user-id
+        in: path
+        description: the id of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Event'
+      responses:
+        "200":
+          description: Successful addition of the event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+      x-swagger-router-controller: Default
+  /users/{user-id}/calendar/{date}/{event-name}:
+    get:
+      summary: Retrieve a specific event from the user's calendar
+      description: |
+        FR6-The user must be able to plan their future outfits.
+      operationId: getUserCalendarEvent
+      parameters:
+      - name: user-id
+        in: path
+        description: The unique identifier of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: date
+        in: path
+        description: The date of the event
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: event-name
+        in: path
+        description: The name of the event
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successful retrieval of the event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+      x-swagger-router-controller: Default
+    put:
+      summary: Update a specific event in the user's calendar
+      operationId: updateUserCalendarEvent
+      parameters:
+      - name: user-id
+        in: path
+        description: The unique identifier of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: date
+        in: path
+        description: The date of the event
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: event-name
+        in: path
+        description: The name of the event
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/Event'
+      responses:
+        "200":
+          description: Successful retrieval of the event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+      x-swagger-router-controller: Default
+    delete:
+      summary: Delete a specific event from the user's calendar
+      operationId: deleteUserCalendarEvent
+      parameters:
+      - name: user-id
+        in: path
+        description: The unique identifier of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: date
+        in: path
+        description: The date of the event
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: event-name
+        in: path
+        description: The name of the event
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Default
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        user-id:
+          type: integer
+        username:
+          type: string
+        password:
+          type: string
+        followers:
+          type: array
+          items:
+            type: integer
+        following:
+          type: array
+          items:
+            type: integer
+      xml:
+        name: User
+    Garment:
+      type: object
+      properties:
+        name:
+          type: string
+        brand:
+          type: string
+        size:
+          type: string
+        imagePath:
+          type: string
+      example:
+        size: size
+        imagePath: imagePath
+        name: name
+        brand: brand
+    Category:
+      type: object
+      properties:
+        name:
+          type: string
+          enum:
+          - Tops
+          - Bottoms
+          - Jackets
+          - Shoes
+          - Accessories
+        garments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Garment'
+      example:
+        garments:
+        - size: size
+          imagePath: imagePath
+          name: name
+          brand: brand
+        - size: size
+          imagePath: imagePath
+          name: name
+          brand: brand
+        name: Tops
+    Outfit:
+      type: object
+      properties:
+        name:
+          type: string
+        garments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Garment'
+      example:
+        garments:
+        - size: size
+          imagePath: imagePath
+          name: name
+          brand: brand
+        - size: size
+          imagePath: imagePath
+          name: name
+          brand: brand
+        name: name
+    Preferences:
+      type: object
+      properties:
+        gender:
+          type: string
+        topsSize:
+          type: string
+        jacketSize:
+          type: string
+        bottomsSize:
+          type: integer
+        shoeSize:
+          type: integer
+        style:
+          type: string
+    Event:
+      type: object
+      properties:
+        month:
+          type: integer
+        date:
+          type: integer
+        day:
+          type: string
+        title:
+          type: string
+        planndedOutfit:
+          type: array
+          items:
+            $ref: '#/components/schemas/Outfit'
+      example:
+        date: 6
+        month: 0
+        planndedOutfit:
+        - garments:
+          - size: size
+            imagePath: imagePath
+            name: name
+            brand: brand
+          - size: size
+            imagePath: imagePath
+            name: name
+            brand: brand
+          name: name
+        - garments:
+          - size: size
+            imagePath: imagePath
+            name: name
+            brand: brand
+          - size: size
+            imagePath: imagePath
+            name: name
+            brand: brand
+          name: name
+        title: title
+        day: day
+    Error:
+      required:
+      - code
+      - message
+      type: object
+  requestBodies:
+    Garment:
+      description: Garment model
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Garment'
+      required: true
+    User:
+      description: User model
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/User'
+      required: true
+    Preferences:
+      description: Preferences model
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Preferences'
+      required: true
+    Outfit:
+      description: Outfit model
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Outfit'
+      required: true
+    Event:
+      description: Event model
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Event'
