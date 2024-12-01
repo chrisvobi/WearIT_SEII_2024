@@ -614,23 +614,11 @@ components:
         title:
           type: string
         planndedOutfit:
-          type: array
-          items:
-            $ref: '#/components/schemas/Outfit'
+          $ref: '#/components/schemas/Outfit'
       example:
         date: 6
         month: 0
         planndedOutfit:
-        - garments:
-          - size: size
-            imagePath: imagePath
-            name: name
-            brand: brand
-          - size: size
-            imagePath: imagePath
-            name: name
-            brand: brand
-          name: name
         - garments:
           - size: size
             imagePath: imagePath
