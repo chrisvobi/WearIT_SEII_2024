@@ -4,15 +4,21 @@
   "description": "Software Engineering I WearIT API",
   "main": "index.js",
   "scripts": {
-	"prestart": "npm install",
-	"start": "node index.js",
-	"test": "echo 'No tests specified!' & exit 0"
+    "prestart": "npm install",
+    "start": "node index.js",
+    "test": "echo 'No tests specified!' & exit 0"
   },
   "keywords": [
     "swagger"
   ],
   "license": "Unlicense",
   "private": true,
+  "devDependencies": {
+    "ava": "^5.3.1",
+    "c8": "^8.0.1",
+    "got": "^11.8.3",
+    "test-listen": "^1.1.0"
+  },
   "dependencies": {
     "connect": "^3.2.0",
     "js-yaml": "^3.3.0",
