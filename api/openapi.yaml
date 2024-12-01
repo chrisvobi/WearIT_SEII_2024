@@ -25,7 +25,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       responses:
         "200":
           description: Default response
@@ -52,7 +52,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: category-name
         in: path
         description: Name of the category
@@ -86,7 +86,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: category-name
         in: path
         description: Name of the category
@@ -120,7 +120,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: category-name
         in: path
         description: Name of the category
@@ -159,7 +159,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: category-name
         in: path
         description: Name of the category
@@ -200,7 +200,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: category-name
         in: path
         description: Name of the category
@@ -239,7 +239,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       requestBody:
         $ref: '#/components/requestBodies/Outfit'
       responses:
@@ -262,7 +262,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: name
         in: path
         description: the name of the outfit
@@ -292,7 +292,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: name
         in: path
         description: the name of the outfit
@@ -324,7 +324,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: name
         in: path
         description: the name of the outfit
@@ -355,7 +355,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       responses:
         "200":
           description: Successful operation
@@ -380,7 +380,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       requestBody:
         $ref: '#/components/requestBodies/Event'
       responses:
@@ -405,7 +405,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: date
         in: path
         description: The date of the event
@@ -441,7 +441,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: date
         in: path
         description: The date of the event
@@ -479,7 +479,7 @@ paths:
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       - name: date
         in: path
         description: The date of the event
