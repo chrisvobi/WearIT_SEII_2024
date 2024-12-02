@@ -1,5 +1,7 @@
 'use strict';
 
+var { event_check } = require("../utils/event_check.js");
+
 exports.getUserCalendar = function(userId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -84,5 +86,34 @@ exports.getUserCalendar = function(userId) {
     }
     
     
+  });
+}
+
+exports.addUserCalendarEvent = function(body,userId) {
+  return new Promise(function(resolve, reject) {
+    // event_check function checks if body is given in correct format
+    if (event_check(body) && userId >= 1 && userId <= 120) {
+      resolve({
+        statusCode: 201,
+        message: body
+      });
+    } else if (userId > 120) {
+      reject({
+        statusCode: 404,
+        message: "User doesn't exist"
+      });
+    }
+    else if (!Number.isInteger(userId)) {
+      reject({
+        statusCode: 400,
+        message: "UserId should be integer"
+      });
+    }
+    else if (!event_check(body) && userId >= 1 && userId <= 120) {
+      reject({
+        statusCode: 400,
+        message: "Event object not given correctly"
+      });
+    }
   });
 }
