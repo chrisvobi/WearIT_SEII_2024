@@ -91,8 +91,11 @@ exports.getUserCalendar = function(userId) {
 
 exports.addUserCalendarEvent = function(body,userId) {
   return new Promise(function(resolve, reject) {
+    var examples = {};
+    examples['application/json'] = [];
     // event_check function checks if body is given in correct format
     if (event_check(body) && userId >= 1 && userId <= 120) {
+      examples['application/json'].push(body); // add body to examples
       resolve({
         statusCode: 201,
         message: body
