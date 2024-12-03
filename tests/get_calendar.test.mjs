@@ -26,7 +26,7 @@ Garment has name:string, size:string, brand:string, imagePath:string
 
 // Following test should return statusCode 200 and body should be an array of Events
 test("GET /users/{user-id}/calendar returns correct response and status code", async (t) => {
-    const userId = generateRandomID(1, 120);
+    var userId = generateRandomID(1, 120);
     while (userId === 32) { // explained in next test
         userId = generateRandomID(1, 120);
     }
