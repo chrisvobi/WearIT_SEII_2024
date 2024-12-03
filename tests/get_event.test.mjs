@@ -90,7 +90,7 @@ test("GET users/{user-id}/calendar/{date}/{event-name} returns 400 name isnt str
 // 400 bad request because date in wrong format
 test("GET users/{user-id}/calendar/{date}/{event-name} returns 400 wrong date format", async (t) => {
     const userId = generateRandomID(1, 120);
-    const wrongDates = ["12",12,"asd","aa-aa","aa-12","13-12","2-30"]; // just some examples whole testing for date in utils/correct_date.js
+    const wrongDates = ["12",12,"asd","aa-aa","aa-12","13-12","2-30","0-0"]; // just some examples whole testing for date in utils/correct_date.js
     const choice = generateRandomID(0, wrongDates.length);
     const dateStr = wrongDates[choice];
     let date;
