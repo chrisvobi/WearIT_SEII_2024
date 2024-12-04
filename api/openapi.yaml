@@ -552,20 +552,7 @@ components:
           - Jackets
           - Shoes
           - Accessories
-        garments:
-          type: array
-          items:
-            $ref: '#/components/schemas/Garment'
       example:
-        garments:
-        - size: size
-          imagePath: imagePath
-          name: name
-          brand: brand
-        - size: size
-          imagePath: imagePath
-          name: name
-          brand: brand
         name: Tops
     Outfit:
       type: object
