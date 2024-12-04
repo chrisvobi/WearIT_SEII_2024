@@ -35,3 +35,14 @@ module.exports.getUserCalendar = async function getUserCalendar (req, res, next,
         utils.writeJson(res, response);
       });
   };
+
+  // PUT users/{user-id}/calendar/{date}/{event-name}
+  module.exports.updateUserCalendarEvent = async function updateUserCalendarEvent (req, res, next, body, userId, date, eventName) {
+    await Calendar.updateUserCalendarEvent(body, userId, date, eventName)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  };
