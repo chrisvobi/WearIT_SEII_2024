@@ -1,3 +1,8 @@
+/*
+date format expected to be an array [MM, DD] (we form it from a string in tests)
+where MM and DD are integers and given correctly (based on months and days)
+*/
+
 exports.correct_date = function (date) {
     return (Array.isArray(date) && date.length === 2
         && Number.isInteger(date[0]) && Number.isInteger(date[1])
