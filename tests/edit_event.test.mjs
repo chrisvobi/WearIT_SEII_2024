@@ -106,8 +106,8 @@ const correctEvent = { // dummy event user wants to update with in calendar
   }
   ];
 
-// 201 new resource created, also returns the new event (user edited) == happy path
-test("PUT users/{user-id}/calendar/{date}/{event-name} returns 201 and the new Event", async (t) => {
+// 200 resource updated, also returns the new event (user edited) == happy path
+test("PUT users/{user-id}/calendar/{date}/{event-name} returns 200 and the new Event", async (t) => {
     const userId = generateRandomID(1, 120);
     const eventName = "Morning Walk";
     const dateStr = "12-01"; // date given in string format MM-DD
@@ -117,7 +117,7 @@ test("PUT users/{user-id}/calendar/{date}/{event-name} returns 201 and the new E
         end: (body) => {response.body = body;}};
     await updateUserCalendarEvent (null, response, null, correctEvent, userId, date, eventName);
     const parsedBody = JSON.parse(response.body);
-	t.is(parsedBody.statusCode, 201);
+	t.is(parsedBody.statusCode, 200);
     t.deepEqual(parsedBody.message, correctEvent);
 });
 
