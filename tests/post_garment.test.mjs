@@ -36,7 +36,7 @@ test("POST /users/{user-id}/categories/{category-name}/garments with a correct g
 });
 
 // Response 400, bad request, user doesn't exist
-test("POST /users/{user-id}/categories/{category-name}/garments with incorrect user id", async (t) => {
+test("POST /users/{user-id}/categories/{category-name}/garments returns bad request because of incorrect user id", async (t) => {
 	const response = {
         writeHead: (statusCode, headers) => {},
         end: (body) => {response.body = body;}};
