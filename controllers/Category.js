@@ -22,3 +22,13 @@ module.exports.getCategories = async function getCategories (req, res, next, use
         utils.writeJson(res, response);
       });
   };
+
+  module.exports.addGarment = async function addGarment (req, res, next, body, userId, categoryName) {
+    await Category.addGarment(body, userId, categoryName)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  };

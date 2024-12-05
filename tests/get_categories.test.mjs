@@ -51,7 +51,7 @@ test("GET /users/{user-id}/categories returns 400 because userId < 1", async (t)
 });
 
 
-// Response 404, bad request (for user id mpampis)
+// Response 400, bad request (for user id mpampis)
 test("GET /users/{user-id}/categories returns 400 because userId was not integer", async (t) => {
 	const response = {
         writeHead: (statusCode, headers) => {},
