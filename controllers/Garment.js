@@ -22,3 +22,13 @@ module.exports.getGarment = async function getGarment (req, res, next, userId, c
         utils.writeJson(res, response);
       });
   };
+
+  module.exports.deleteGarment = async function deleteGarment (req, res, next, userId, categoryName, name) {
+    await Garment.deleteGarment(userId, categoryName, name)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  };
