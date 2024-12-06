@@ -46,3 +46,14 @@ module.exports.getUserCalendar = async function getUserCalendar (req, res, next,
         utils.writeJson(res, response);
       });
   };
+
+  // DELETE users/{user-id}/calendar/{date}/{event-name}
+  module.exports.deleteUserCalendarEvent = async function deleteUserCalendarEvent (req, res, next, userId, date, eventName) {
+    await Calendar.deleteUserCalendarEvent(userId, date, eventName)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  };
