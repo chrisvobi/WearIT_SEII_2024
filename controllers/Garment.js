@@ -12,3 +12,13 @@ module.exports.getGarment = async function getGarment (req, res, next, userId, c
         utils.writeJson(res, response);
       });
   };
+
+  module.exports.editGarment = async function editGarment (req, res, next, body, userId, categoryName, name) {
+    await Garment.editGarment(body, userId, categoryName, name)
+      .then(function (response) {
+        utils.writeJson(res, response);
+      })
+      .catch(function (response) {
+        utils.writeJson(res, response);
+      });
+  };
