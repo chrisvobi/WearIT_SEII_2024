@@ -1,6 +1,6 @@
 describe('login', () => {
     beforeEach(() => {
-        cy.visit('http://localhost:8080/docs/#/'); // Replace with the correct URL
+        cy.visit('http://localhost:8080/docs/'); // Replace with the correct URL
     });
 
     it('GET OUTFITS TEST', () => {
