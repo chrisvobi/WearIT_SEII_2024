@@ -382,6 +382,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       requestBody:
         $ref: '#/components/requestBodies/Event'
       responses:

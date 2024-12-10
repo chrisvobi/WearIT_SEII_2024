@@ -59,8 +59,7 @@ exports.getUserCalendar = function(userId) {
 }];
     if (userId === 32) {
       resolve({
-        statusCode: 204,
-        body: "User doesn't have any events planned."
+        statusCode: 204
       })
     }
     else if (userId > 120) {
@@ -75,35 +74,41 @@ exports.getUserCalendar = function(userId) {
   });
 }
 
-// POST users/{user-id}/calendar
+// POST users/{userId}/calendar
 exports.addUserCalendarEvent = function(body,userId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = [];
-    // event_check function checks if body is given in correct format
-    if (event_check(body) && userId >= 1 && userId <= 120) {
-      examples['application/json'].push(body); // add body to examples
-      resolve({
-        statusCode: 201,
-        message: examples[Object.keys(examples)][0]
-      });
-    } else if (userId > 120) {
+    examples['application/json'] = {"date" : 2,
+  "day" : "Monday",
+  "month" : 12,
+  "title" : "Afternoon Coffee",
+  "planndedOutfit" :  {
+    "garments" : [ {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC04_12_01_2024.jpeg",
+      "name" : "GreyCrewneck",
+      "brand" : "Zara"
+    }, {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC05_12_01_2024.jpeg",
+      "name" : "BlackFormalPants",
+      "brand" : "H&M"
+    }, {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC06_12_01_2024.jpeg",
+      "name" : "WhiteAirforceShoes",
+      "brand" : "Nike"
+    } ],
+    "name" : "CoffeeDate"
+  },};
+    if (userId > 120) {
       reject({
         statusCode: 404,
-        message: "User doesn't exist"
-      });
+        body: "User doesn't exist"
+      })
     }
-    else if (!Number.isInteger(userId)) {
-      reject({
-        statusCode: 400,
-        message: "UserId should be integer"
-      });
-    }
-    else if (!event_check(body) && userId >= 1 && userId <= 120) {
-      reject({
-        statusCode: 400,
-        message: "Event object not given correctly"
-      });
+    else if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)[0]]);
     }
   });
 }

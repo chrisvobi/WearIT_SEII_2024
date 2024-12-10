@@ -14,14 +14,14 @@ module.exports.getUserCalendar = async function getUserCalendar (req, res, next,
       });
   };
 
-  // POST users/{user-id}/calendar
+  // POST users/{userId}/calendar
   module.exports.addUserCalendarEvent = async function addUserCalendarEvent (req, res, next, body, userId) {
     await Calendar.addUserCalendarEvent(body, userId)
       .then(function (response) {
         utils.writeJson(res, response);
       })
       .catch(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body,response.statusCode);
       });
   };
 
