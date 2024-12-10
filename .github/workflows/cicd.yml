@@ -14,14 +14,16 @@ jobs:
         with:
           node-version: 22
 
-      - name: Download dependencies
-        run: npm install
+      - name: Clean and install dependencies
+        run: |
+          npm ci
+          npm install foreground-child
 
-      - name: Make c8 Executable
-        run: chmod +x ./node_modules/.bin/c8
+      - name: Verify dependencies
+        run: npm ls
       
-      - name: Run Tests with c8
-        run: ./node_modules/.bin/c8 npm test
+      - name: Run tests
+        run: npx c8 ava
 
       - name: Cypress run
         uses: cypress-io/github-action@v6
