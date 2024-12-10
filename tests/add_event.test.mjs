@@ -120,7 +120,7 @@ test("POST /users/{userId}/calendar returns 404, user doesn't exist", async (t) 
   t.is(response.body, "User doesn't exist");
 });
 
-// 404 userId > 120
+// 404 userId not given
 test("POST /users/{userId}/calendar returns 404, userId not given", async (t) => {
   const userId = "";
   const response = await t.context.got.post(`users/${userId}/calendar`, { throwHttpErrors: false,
