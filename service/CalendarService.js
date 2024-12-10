@@ -78,29 +78,8 @@ exports.getUserCalendar = function(userId) {
 exports.addUserCalendarEvent = function(body,userId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = {"date" : 2,
-  "day" : "Monday",
-  "month" : 12,
-  "title" : "Afternoon Coffee",
-  "planndedOutfit" :  {
-    "garments" : [ {
-      "size" : "M",
-      "imagePath" : "../images/CameraRoll/PIC04_12_01_2024.jpeg",
-      "name" : "GreyCrewneck",
-      "brand" : "Zara"
-    }, {
-      "size" : "M",
-      "imagePath" : "../images/CameraRoll/PIC05_12_01_2024.jpeg",
-      "name" : "BlackFormalPants",
-      "brand" : "H&M"
-    }, {
-      "size" : "M",
-      "imagePath" : "../images/CameraRoll/PIC06_12_01_2024.jpeg",
-      "name" : "WhiteAirforceShoes",
-      "brand" : "Nike"
-    } ],
-    "name" : "CoffeeDate"
-  },};
+    examples['application/json'] = [];
+    examples['application/json'].push(body);
     if (userId > 120) {
       reject({
         statusCode: 404,
@@ -108,7 +87,7 @@ exports.addUserCalendarEvent = function(body,userId) {
       })
     }
     else if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)[0]]);
+      resolve(examples[Object.keys(examples)][0]);
     }
   });
 }
