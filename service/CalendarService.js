@@ -3,7 +3,7 @@
 var { event_check } = require("../utils/event_check.js");
 var { correct_date } = require("../utils/correct_date.js");
 
-// GET users/{user-id}/calendar
+// GET users/{userId}/calendar
 exports.getUserCalendar = function(userId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -57,37 +57,21 @@ exports.getUserCalendar = function(userId) {
     "name" : "CoffeeDate"
   } ],
 }];
-    if (Object.keys(examples).length > 0 && userId >= 1 && userId <= 120 && userId != 32) {
+    if (userId === 32) {
       resolve({
-        statusCode: 200,
-        body: examples[Object.keys(examples)]
-      });
-    } else if (userId > 120) {
+        statusCode: 204,
+        body: "User doesn't have any events planned."
+      })
+    }
+    else if (userId > 120) {
       reject({
         statusCode: 404,
         body: "User doesn't exist"
       });
     }
-    else if (userId < 1) {
-      reject({
-        statusCode: 400,
-        body: "UserId should be greater than 1"
-      });
-    }
-    else if (!Number.isInteger(userId)) {
-      reject({
-        statusCode: 400,
-        body: "UserId should be integer"
-      });
-    }
-    else if (userId === 32) {
-      resolve({
-        statusCode: 204,
-        body: "User doesn't have any events planned"
-      });
-    }
-    
-    
+    else if (Object.keys(examples).length > 0) {
+      resolve({body: examples[Object.keys(examples)]});
+    } 
   });
 }
 

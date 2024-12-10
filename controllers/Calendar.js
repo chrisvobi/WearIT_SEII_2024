@@ -3,14 +3,14 @@
 var utils = require('../utils/writer.js');
 var Calendar = require('../service/CalendarService');
 
-// POST users/{user-id}/calendar
+// GET users/{userId}/calendar
 module.exports.getUserCalendar = async function getUserCalendar (req, res, next, userId) {
     await Calendar.getUserCalendar(userId)
       .then(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       })
       .catch(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       });
   };
 
