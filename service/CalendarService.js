@@ -113,7 +113,7 @@ exports.addUserCalendarEvent = function(body,userId) {
   });
 }
 
-// GET users/{user-id}/calendar/{date}/{event-name}
+// GET users/{userId}/calendar/{date}/{eventName}
 exports.getUserCalendarEvent = function(userId,date,eventName) {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -167,39 +167,35 @@ exports.getUserCalendarEvent = function(userId,date,eventName) {
     "name" : "CoffeeDate"
   } ],
 }];
-    if (Object.keys(examples).length > 0 && userId >= 1 && userId <= 120 && correct_date(date) && typeof(eventName) === 'string') {
+    if (userId > 120) {
+      reject({
+        statusCode: 404,
+        body: "User doesn't exist"
+      });
+    }
+    else if (Object.keys(examples).length > 0) { // check that events exist
       const events = examples[Object.keys(examples)];
-      const eventIndex = events.findIndex(event => event.title === eventName);
-      if (eventIndex !== -1) {
+      const eventIndex = events.findIndex(event => event.title === eventName); // find event that matches the eventName
+      if (eventIndex !== -1) { // eventName exists
+        const date_array = date.split("-").map(Number);
         const matchedEvent = events[eventIndex];
-        const [givenMonth, givenDay] = date;
-        if (givenMonth === matchedEvent.month && givenDay === matchedEvent.date) {
+        const [givenMonth, givenDay] = date_array;
+        if (givenMonth === matchedEvent.month && givenDay === matchedEvent.date) { // check if the dates match
           resolve({
-            statusCode: 200,
             body: matchedEvent
           });
-        } else {
+        } else { // dates dont match
           reject({
             statusCode: 404,
             body: "Cannot find event, date and name don't match"
           })
         }
-      } else {
+      } else { // eventName doesnt exist
         reject({
           statusCode: 404,
           body: "Event name doesn't exist"
         })
       }
-    } else if (userId >= 1 && userId <= 120 && correct_date(date) && typeof(eventName) !== 'string') {
-      reject({
-        statusCode: 400,
-        body: "Event name must be string"
-      });
-    } else if (userId >= 1 && userId <= 120 && typeof(eventName) === 'string' && !correct_date(date)) {
-      reject({
-        statusCode: 400,
-        body: "Date given in wrong format"
-      })
     }
   });
 }

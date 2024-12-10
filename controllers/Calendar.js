@@ -25,14 +25,14 @@ module.exports.getUserCalendar = async function getUserCalendar (req, res, next,
       });
   };
 
-  // GET users/{user-id}/calendar/{date}/{event-name}
+  // GET users/{userId}/calendar/{date}/{eventName}
   module.exports.getUserCalendarEvent = async function getUserCalendarEvent (req, res, next, userId, date, eventName) {
     await Calendar.getUserCalendarEvent(userId, date, eventName)
       .then(function (response) {
         utils.writeJson(res, response);
       })
       .catch(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       });
   };
 
