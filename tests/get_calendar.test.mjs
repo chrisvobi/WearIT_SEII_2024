@@ -39,8 +39,8 @@ test("GET /users/{userId}/calendar returns correct response and status code", as
  test("GET /users/{userId}/calendar returns 204 because User doesn't have anything in calendar", async (t) => {
     const userId = 32;
     const response = await t.context.got(`users/${userId}/calendar`, { throwHttpErrors: false });
-    console.log(response.statusCode,response.body);
     t.is(response.statusCode, 204);
+    t.is(response.body, "");
 });
 
  // Response 404 not found (userid > 120)
