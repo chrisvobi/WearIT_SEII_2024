@@ -2,7 +2,6 @@ import http from "node:http";
 import test from "ava";
 import got from "got";
 import app from "../index.js";
-import { getUserCalendar } from "../controllers/Calendar.js";
 import { generateRandomID } from "../utils/random_id.js";
 
 test.before(async (t) => {
