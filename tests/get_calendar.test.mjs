@@ -60,8 +60,16 @@ test("GET /users/{userId}/calendar returns 400 because userId < 1", async (t) =>
 });
 
 // Response 400 Bad Request
-test("GET /users/{userId}/calendar returns 400 because userId was not integer", async (t) => {
+test("GET /users/{userId}/calendar returns 400 because userId was string", async (t) => {
     const userId = "asd";
+    const response = await t.context.got(`users/${userId}/calendar`, { throwHttpErrors: false });
+    t.is(response.statusCode, 400);
+    t.is(response.body.message, "request.params.userId should be integer");
+});
+
+// Response 400 Bad Request
+test("GET /users/{userId}/calendar returns 400 because userId was float", async (t) => {
+    const userId = 1.5;
     const response = await t.context.got(`users/${userId}/calendar`, { throwHttpErrors: false });
     t.is(response.statusCode, 400);
     t.is(response.body.message, "request.params.userId should be integer");
