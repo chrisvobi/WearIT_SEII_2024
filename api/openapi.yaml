@@ -621,7 +621,7 @@ components:
         date: 6
         month: 0
         planndedOutfit:
-        - garments:
+          garments:
           - size: size
             imagePath: imagePath
             name: name
