@@ -94,6 +94,16 @@ test("POST /users/{userId}/calendar returns 404, user doesn't exist", async (t) 
   t.is(response.body, "User doesn't exist");
 });
 
+// 404 userId > 120
+test("POST /users/{userId}/calendar returns 404, userId not given", async (t) => {
+  const userId = "";
+  const response = await t.context.got.post(`users/${userId}/calendar`, { throwHttpErrors: false,
+    json: correctEvent
+ });
+  t.is(response.statusCode, 404);
+  t.is(response.body.message, "not found");
+});
+
 // 400 userId not integer
 test("POST /users/{userId}/calendar returns 400, userId must be integer", async (t) => {
   const userId = "asd";

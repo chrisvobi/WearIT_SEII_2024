@@ -51,6 +51,14 @@ test("GET /users/{userId}/calendar returns correct response and status code", as
     t.is(response.body, "User doesn't exist");
 });
 
+// 404 empty userId
+test("GET /users/{userId}/calendar returns 404 because userId was not given", async (t) => {
+    const userId = "";
+    const response = await t.context.got(`users/${userId}/calendar`, { throwHttpErrors: false });
+    t.is(response.statusCode, 404);
+    t.is(response.body.message, "not found");
+});
+
 // Response 400 Bad Request
 test("GET /users/{userId}/calendar returns 400 because userId < 1", async (t) => {
     const userId = generateRandomID(-100, 0);
