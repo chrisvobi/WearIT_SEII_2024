@@ -17,8 +17,17 @@ jobs:
       - name: Download dependencies
         run: npm install
 
-      - name: Run tests
-        run: npm run test
+      - name: Make c8 Executable
+        run: chmod +x ./node_modules/.bin/c8
+      
+      - name: Run Tests with c8
+        run: ./node_modules/.bin/c8 npm test
+
+      - name: Cypress run
+        uses: cypress-io/github-action@v6
+        with:
+          start: npm start
+          wait-on: 'http://localhost:8080/docs' 
 
   cd:
     runs-on: ubuntu-latest
