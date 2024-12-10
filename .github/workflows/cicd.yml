@@ -14,17 +14,12 @@ jobs:
         with:
           node-version: 22
 
-      - name: Clean and install dependencies
-        run: |
-          npm ci
-          npm install foreground-child
+      - name: Download dependencies
+        run: npm install
 
-      - name: Verify dependencies
-        run: npm ls
-      
       - name: Run tests
-        run: npx c8 ava
-
+        run: npm run test
+      
       - name: Cypress run
         uses: cypress-io/github-action@v6
         with:
