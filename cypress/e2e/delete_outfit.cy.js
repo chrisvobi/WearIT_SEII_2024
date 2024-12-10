@@ -14,7 +14,7 @@ describe('Delete outfit UI test', () => {
 
     it('Test the ui for the try out' , () => {
         cy.get('.try-out').click() // click try out
-        cy.get('input[placeholder="user-id - user that deletes the outfit"]').type(1) // type user id
+        cy.get('input[placeholder="userId - user that deletes the outfit"]').type(1) // type user id
         cy.get('input[placeholder="name - the name of the outfit"]').type("test_outfit") // type outfit name
         cy.get(".opblock-control__btn").click() // click execute
         cy.get(".request-url").contains("http://localhost:8080/users/1/outfits/test_outfit") // check that request url appears right
