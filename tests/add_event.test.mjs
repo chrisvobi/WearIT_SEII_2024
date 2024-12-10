@@ -49,9 +49,10 @@ const correctEvent = { // dummy event user wants to add to calendar
   },
 };
 
-const falseEvent = {
+const falseEvent = { // plannedOutfit not Object
   "date" : 2,
   "day" : "Monday",
+  "month": 12,
   "title" : "Afternoon Coffee",
   "planndedOutfit" :  [{
     "garments" : [ {
@@ -72,6 +73,31 @@ const falseEvent = {
     } ],
     "name" : "CoffeeDate"
   }] ,
+};
+
+const falseEvent2 = { // missing month property
+  "date" : 2,
+  "day" : "Monday",
+  "title" : "Afternoon Coffee",
+  "planndedOutfit" :  {
+    "garments" : [ {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC04_12_01_2024.jpeg",
+      "name" : "GreyCrewneck",
+      "brand" : "Zara"
+    }, {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC05_12_01_2024.jpeg",
+      "name" : "BlackFormalPants",
+      "brand" : "H&M"
+    }, {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC06_12_01_2024.jpeg",
+      "name" : "WhiteAirforceShoes",
+      "brand" : "Nike"
+    } ],
+    "name" : "CoffeeDate"
+  } ,
 };
 
 // 200 new resource created, also returns the event user created
@@ -122,4 +148,14 @@ test("POST /users/{userId}/calendar returns 400, event invalid", async (t) => {
  });
   t.is(response.statusCode, 400);
   t.is(response.body.message, "request.body.planndedOutfit should be object");
+});
+
+// 400 event missing properties
+test("POST /users/{userId}/calendar returns 400, event missing properties", async (t) => {
+  const userId = generateRandomID(1, 120);
+  const response = await t.context.got.post(`users/${userId}/calendar`, { throwHttpErrors: false,
+    json: falseEvent2
+ });
+  t.is(response.statusCode, 400);
+  t.is(response.body.message, "request.body should have required property 'month'");
 });

@@ -408,6 +408,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: date
         in: path
         description: The date of the event
@@ -431,7 +432,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
-      x-swagger-router-controller: Default
+      x-swagger-router-controller: Calendar
     put:
       summary: Update a specific event in the user's calendar
       operationId: updateUserCalendarEvent
@@ -617,6 +618,12 @@ components:
           type: string
         planndedOutfit:
           $ref: '#/components/schemas/Outfit'
+      required:
+        - month
+        - date
+        - day
+        - title
+        - planndedOutfit
       example:
         date: 6
         month: 0
