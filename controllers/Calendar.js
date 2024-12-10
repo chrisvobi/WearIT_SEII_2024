@@ -18,7 +18,7 @@ module.exports.getUserCalendar = async function getUserCalendar (req, res, next,
   module.exports.addUserCalendarEvent = async function addUserCalendarEvent (req, res, next, body, userId) {
     await Calendar.addUserCalendarEvent(body, userId)
       .then(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response, 201);
       })
       .catch(function (response) {
         utils.writeJson(res, response.body,response.statusCode);

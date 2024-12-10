@@ -100,13 +100,13 @@ const falseEvent2 = { // missing month property
   } ,
 };
 
-// 200 new resource created, also returns the event user created
-test("POST /users/{userId}/calendar returns 200 and the Event the user adds", async (t) => {
+// 201 new resource created, also returns the event user created
+test("POST /users/{userId}/calendar returns 201 and the Event the user adds", async (t) => {
   const userId = generateRandomID(1, 120);
   const response = await t.context.got.post(`users/${userId}/calendar`, { throwHttpErrors: false,
     json: correctEvent
  });
-  t.is(response.statusCode, 200);
+  t.is(response.statusCode, 201);
   t.deepEqual(response.body, correctEvent);
 });
 
