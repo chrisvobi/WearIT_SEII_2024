@@ -1,5 +1,6 @@
 'use strict';
 
+const { use } = require("../index.js");
 var { correct_garment } = require("../utils/correct_garment.js");
 /**
  * Get a specific garment in a specific category for a user
@@ -77,8 +78,8 @@ exports.getGarment = function(userId,categoryName,name) {
 exports.editGarment = function(body,userId,categoryName,name) {
     return new Promise(function(resolve, reject) {
       var examples = {};
-      examples['application/json'] = {
-        "Tops": [
+      examples['application/json'] = { 
+        "45" : { "Tops": [
           {
             "size": "M",
             "imagePath": "../images/45/Black_Hoodie.jpeg",
@@ -90,8 +91,8 @@ exports.editGarment = function(body,userId,categoryName,name) {
             "name" : "Grey Crewneck",
             "brand" : "Zara"
           }
-        ],
-        "Shoes": [
+        ]},
+        "57": { "Shoes": [
           {
             "size" : "41",
             "imagePath" : "../images/57/White_Shoes.jpeg",
@@ -103,43 +104,31 @@ exports.editGarment = function(body,userId,categoryName,name) {
             "name" : "White Airforce Shoes",
             "brand" : "Nike"
           }
-        ]
+        ]}
       };
-      if (userId < 1 || userId > 100) {
-        reject({
-            body: "User doesn't exist",
-            statusCode: 400
-        });
-      } else if (!(categoryName === "Tops" || categoryName === "Shoes")){
-        reject({
-            body: "Category doesn't exist",
-            statusCode: 400
-        });
-      } else if (correct_garment(body)){
-        const garments = examples[Object.keys(examples)][categoryName];
-        // check if edited garment name already exists
-        const garmentIndex1 = garments.findIndex(garment => (garment.size == body.size && garment.imagePath == body.imagePath && garment.name == body.name && garment.brand == body.brand));
-        if (garmentIndex1 != -1){
-            reject({
-                body: "Garment already exists",
-                statusCode: 409
-            });
-        }
-        // check if name of garment to be edited exists
-        const garmentIndex2 = garments.findIndex(garment => garment.name === name);
-        if (garmentIndex2 !== -1) {
-            examples[Object.keys(examples)][categoryName][garmentIndex2] = body;
-            resolve({
-                body: examples[Object.keys(examples)][categoryName][garmentIndex2],
-                statusCode: 200
-            });
-        } else {
-            reject({
-                body: "Garment doesn't exist",
-                statusCode: 400
-            })
-        }
-        }
+      // check if edit of garment already exists
+      const garments = examples[Object.keys(examples)][userId][categoryName];
+      var garmentIndex = garments.findIndex(garment => (garment.size == body.size && garment.imagePath == body.imagePath && garment.name == body.name && garment.brand == body.brand));
+      if (garmentIndex != -1){
+          reject({
+              body: "Garment already exists",
+              statusCode: 409
+          });
+      }
+      // check if name of garment to be edited exists
+      garmentIndex = garments.findIndex(garment => garment.name === name);
+      if (garmentIndex != -1) {
+          examples[Object.keys(examples)][userId][categoryName][garmentIndex] = body;
+          resolve({
+              body: examples[Object.keys(examples)][userId][categoryName][garmentIndex],
+              statusCode: 200
+          });
+      } else {
+          reject({
+              body: "Garment doesn't exist",
+              statusCode: 404
+          })
+      }
     });
 }  
 
