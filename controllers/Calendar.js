@@ -47,13 +47,13 @@ module.exports.getUserCalendar = function getUserCalendar (req, res, next, userI
       });
   };
 
-  // DELETE users/{user-id}/calendar/{date}/{event-name}
-  module.exports.deleteUserCalendarEvent = async function deleteUserCalendarEvent (req, res, next, userId, date, eventName) {
-    await Calendar.deleteUserCalendarEvent(userId, date, eventName)
+  // DELETE users/{userId}/calendar/{date}/{eventName}
+  module.exports.deleteUserCalendarEvent = function deleteUserCalendarEvent (req, res, next, userId, date, eventName) {
+    Calendar.deleteUserCalendarEvent(userId, date, eventName)
       .then(function (response) {
         utils.writeJson(res, response);
       })
       .catch(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       });
   };
