@@ -23,12 +23,12 @@ module.exports.getGarment = function getGarment (req, res, next, userId, categor
       });
   };
 
-  module.exports.deleteGarment = async function deleteGarment (req, res, next, userId, categoryName, name) {
-    await Garment.deleteGarment(userId, categoryName, name)
+  module.exports.deleteGarment = function deleteGarment (req, res, next, userId, categoryName, name) {
+    Garment.deleteGarment(userId, categoryName, name)
       .then(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       })
       .catch(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       });
   };

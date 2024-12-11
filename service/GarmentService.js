@@ -144,8 +144,8 @@ exports.editGarment = function(body,userId,categoryName,name) {
 exports.deleteGarment = function(userId,categoryName,name) {
     return new Promise(function(resolve, reject) {
       var examples = {};
-      examples['application/json'] = examples['application/json'] = {
-        "Tops": [
+      examples['application/json'] = { 
+        "45" : { "Tops": [
           {
             "size": "M",
             "imagePath": "../images/45/Black_Hoodie.jpeg",
@@ -157,8 +157,8 @@ exports.deleteGarment = function(userId,categoryName,name) {
             "name" : "Grey Crewneck",
             "brand" : "Zara"
           }
-        ],
-        "Shoes": [
+        ]},
+        "57": { "Shoes": [
           {
             "size" : "41",
             "imagePath" : "../images/57/White_Shoes.jpeg",
@@ -170,38 +170,30 @@ exports.deleteGarment = function(userId,categoryName,name) {
             "name" : "White Airforce Shoes",
             "brand" : "Nike"
           }
-        ]
+        ]}
       };
-      if (userId < 1 || userId > 100) {
-        reject({
-            body: "User doesn't exist",
-            statusCode: 400
-        });
-      } else if (!(categoryName === "Tops" || categoryName === "Shoes")){
-        reject({
-            body: "Category doesn't exist",
-            statusCode: 400
-        });
-      } else if (typeof(name) === 'string') {
-        const garments = examples[Object.keys(examples)][categoryName];
-        // check if name of garment to be deleted exists
-        const garmentIndex = garments.findIndex(garment => garment.name === name);
-        if (garmentIndex !== -1) {
-            examples[Object.keys(examples)][categoryName].splice(garmentIndex, 1); // remove said garment from examples
-            const garments1 = examples[Object.keys(examples)][categoryName];
-            const garmentIndex1 = garments1.findIndex(garment => garment.name === name);// check if garment was successfully removed
-            if (garmentIndex1 === -1) {
-                resolve({
-                    body: "Garment deleted successfully",
-                    statusCode: 200
-                });
-            } 
+      // check if name of garment to be deleted exists
+      var garments = examples[Object.keys(examples)][userId][categoryName];
+      var garmentIndex = garments.findIndex(garment => garment.name === name);
+      if (garmentIndex !== -1) {
+        examples[Object.keys(examples)][userId][categoryName].splice(garmentIndex, 1); // remove said garment from examples
+        garments = examples[Object.keys(examples)][userId][categoryName];
+        garmentIndex = garments.findIndex(garment => garment.name === name);// check if garment was successfully removed
+        if (garmentIndex === -1) {
+          resolve({
+            body: JSON.stringify({ message: "Garment deleted successfully" }),
+            statusCode: 200
+          });
         } else {
-            reject({
-                body: "Garment doesn't exist",
-                statusCode: 400
-                })
+          reject({
+            body: "Something went wrong",
+          })
         }
-    }
-});
+      } else {
+        reject({
+            body: "Garment doesn't exist",
+            statusCode: 400
+        })
+      }  
+    });
 }  

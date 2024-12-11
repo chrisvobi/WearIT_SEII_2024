@@ -2,7 +2,6 @@ import http from "node:http";
 import test from "ava";
 import got from "got";
 import app from "../index.js";
-import { deleteGarment } from "../controllers/Garment.js";
 
 
 test.before(async (t) => {
@@ -19,45 +18,51 @@ test.after.always((t) => {
 // Checks for extensive user id testing and correct category names have already been implemented in other files
 
 // Response 200, it worked, successfully deleted garment in a category
-test("DELETE /users/{user-id}/categories/{category-name}/garments/{name} successfully deletes a garment", async (t) => {
-	const response = {
-        writeHead: (statusCode, headers) => {},
-        end: (body) => {response.body = body;}};
-    await deleteGarment(null, response, null, 45, "Tops", "Grey Crewneck");
-    const parsedBody = JSON.parse(response.body);
-    t.is(parsedBody.statusCode, 200);
-    t.is(parsedBody.body, "Garment deleted successfully");
+test("DELETE /users/{userId}/categories/{categoryName}/garments/{name} successfully deletes a garment", async (t) => {
+    const userId = 45;
+    const category = "Tops"
+    const name = "Grey Crewneck"
+    const response = await t.context.got.delete(`users/${userId}/categories/${category}/garments/${name}`, { throwHttpErrors: false });
+    t.is(response.statusCode, 200);
+    t.is(response.body.message, "Garment deleted successfully");
 });
 
 // Response 400, bad request, garment name doesn't exist 
-test("DELETE /users/{user-id}/categories/{category-name}/garments/{name} bad request, name doesn't exist", async (t) => {
-	const response = {
-        writeHead: (statusCode, headers) => {},
-        end: (body) => {response.body = body;}};
-    await deleteGarment(null, response, null, 45, "Tops", "GreY Crewneck");
-    const parsedBody = JSON.parse(response.body);
-    t.is(parsedBody.statusCode, 400);
-    t.is(parsedBody.body, "Garment doesn't exist");
+test("DELETE /users/{userId}/categories/{categoryName}/garments/{name} bad request, garment name doesn't exist", async (t) => {
+    const userId = 45;
+    const category = "Tops"
+    const name = "GreY Crewneck"
+    const response = await t.context.got.delete(`users/${userId}/categories/${category}/garments/${name}`, { throwHttpErrors: false });
+    t.is(response.statusCode, 400);
+    t.is(response.body, "Garment doesn't exist");
 });
 
-// Response 400, bad request, user doesn't exist
-test("DELETE /users/{user-id}/categories/{category-name}/garments/{name} returns bad request because of incorrect user id", async (t) => {
-	const response = {
-        writeHead: (statusCode, headers) => {},
-        end: (body) => {response.body = body;}};
-    await deleteGarment(null, response, null, 145, "Tops", "Black Hoodie");
-    const parsedBody = JSON.parse(response.body);
-    t.is(parsedBody.statusCode, 400);
-    t.is(parsedBody.body, "User doesn't exist");
+// Response 400, bad request, user id doesn't exist
+test("DELETE /users/{userId}/categories/{categoryName}/garments/{name} bad request, user id doesn't exist", async (t) => {
+    const userId = 0;
+    const category = "Tops"
+    const name = "GreY Crewneck"
+    const response = await t.context.got.delete(`users/${userId}/categories/${category}/garments/${name}`, { throwHttpErrors: false });
+    t.is(response.statusCode, 400);
+    t.is(response.body.message, "request.params.userId should be >= 1");
 });
 
 // Response 400, bad request, category doesn't exist
-test("DELETE /users/{user-id}/categories/{category-name}/garments/{name} returns bad request because of incorrect category", async (t) => {
-	const response = {
-        writeHead: (statusCode, headers) => {},
-        end: (body) => {response.body = body;}};
-    await deleteGarment(null, response, null, 45, "TopS", "Black Hoodie");
-    const parsedBody = JSON.parse(response.body);
-    t.is(parsedBody.statusCode, 400);
-    t.is(parsedBody.body, "Category doesn't exist");
+test("DELETE /users/{userId}/categories/{categoryName}/garments/{name} returns bad request because of incorrect category", async (t) => {
+    const userId = 45;
+    const category = "TopS"
+    const name = "GreY Crewneck"
+    const response = await t.context.got.delete(`users/${userId}/categories/${category}/garments/${name}`, { throwHttpErrors: false });
+    t.is(response.statusCode, 400);
+    t.is(response.body.message, "request.params.categoryName should be equal to one of the allowed values: Jackets, Tops, Pants, Shoes, Accessories")
+});
+
+// Response 400, bad request, category is empty
+test("DELETE /users/{userId}/categories/{categoryName}/garments/{name} returns bad request because of empty category", async (t) => {
+    const userId = 45;
+    const category = ""
+    const name = "GreY Crewneck"
+    const response = await t.context.got.delete(`users/${userId}/categories/${category}/garments/${name}`, { throwHttpErrors: false });
+    t.is(response.statusCode, 404);
+    t.is(response.body.message, "not found")
 });
