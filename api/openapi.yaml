@@ -359,7 +359,7 @@ paths:
           minimum: 1
       responses:
         "200":
-          description: Successful operation
+          description: Successful Operation
           content:
             application/json:
               schema:
@@ -367,6 +367,24 @@ paths:
                 items:
                   $ref: '#/components/schemas/Event'
                 x-content-type: application/json
+        "204":
+          description: Successful Operation No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Calendar
     post:
       summary: Add a new event to the user's calendar
@@ -386,12 +404,24 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/Event'
       responses:
-        "200":
+        "201":
           description: Successful addition of the event
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Calendar
   /users/{userId}/calendar/{date}/{eventName}:
     get:
@@ -434,6 +464,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Calendar
     put:
       summary: Update a specific event in the user's calendar
@@ -470,11 +512,23 @@ paths:
         $ref: '#/components/requestBodies/Event'
       responses:
         "200":
-          description: Successful retrieval of the event
+          description: Successful update of the event
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Calendar
     delete:
       summary: Delete a specific event from the user's calendar
