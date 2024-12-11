@@ -13,8 +13,8 @@ var { correct_garment } = require("../utils/correct_garment.js");
 exports.getGarment = function(userId,categoryName,name) {
     return new Promise(function(resolve, reject) {
       var examples = {};
-      examples['application/json'] = {
-        "Tops": [
+      examples['application/json'] = { 
+        "45" : { "Tops": [
           {
             "size": "M",
             "imagePath": "../images/45/Black_Hoodie.jpeg",
@@ -26,8 +26,8 @@ exports.getGarment = function(userId,categoryName,name) {
             "name" : "Grey Crewneck",
             "brand" : "Zara"
           }
-        ],
-        "Shoes": [
+        ]},
+        "57": { "Shoes": [
           {
             "size" : "41",
             "imagePath" : "../images/57/White_Shoes.jpeg",
@@ -39,34 +39,25 @@ exports.getGarment = function(userId,categoryName,name) {
             "name" : "White Airforce Shoes",
             "brand" : "Nike"
           }
-        ]
+        ]}
       };
-      if (userId < 1 || userId > 100) {
+      if (userId > 100) {
         reject({
             body: "User doesn't exist",
-            statusCode: 400
+            statusCode: 404
         });
-      } else if (categoryName === "Tops" && name === "Black Hoodie") {
-        resolve({
-            body: examples[Object.keys(examples)][categoryName][0],
-            statusCode: 200
-        });
-      } else if (categoryName === "Shoes" && name === "White Airforce Shoes") {
-        resolve({
-            body: examples[Object.keys(examples)][categoryName][1],
-            statusCode: 200
-        });
-      }  else if (categoryName !== "Shoes" && categoryName !== "Tops") {
-        reject({
-            body: "Category doesn't exist",
-            statusCode: 400
-        });
-      } else if (categoryName === "Tops" && name !== "Black Hoodie") {
-        reject({
-            body: "Garment doesn't exist",
-            statusCode: 400
-        });
-      }
+      } else if (Object.keys(examples).length > 0) {
+        const garments = examples[Object.keys(examples)][userId][categoryName];
+        const garmentIndex = garments.findIndex(garment => (garment.name == name));
+        if (garmentIndex == -1){ // Check if garment name doesn't exist in DB 
+          reject({
+                  body: "Garment doesn't exist",
+                  statusCode: 400
+          });
+        } else {
+          resolve({body: examples[Object.keys(examples)][userId][categoryName][garmentIndex]});
+        }
+      } 
     });
   }
 
