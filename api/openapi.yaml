@@ -63,7 +63,7 @@ paths:
         explode: false
         schema:
           type: string
-          enum: [Tops, Shoes, Accessories, Pants, Jackets]
+          enum: [Jackets, Tops, Pants, Shoes, Accessories]
       responses:
         "200":
           description: Default response
@@ -99,7 +99,7 @@ paths:
         explode: false
         schema:
           type: string
-          enum: [Tops, Shoes, Accessories, Pants, Jackets]
+          enum: [Jackets, Tops, Pants, Shoes, Accessories]
       requestBody:
         $ref: '#/components/requestBodies/Garment'
       responses:
@@ -135,7 +135,7 @@ paths:
         explode: false
         schema:
           type: string
-          enum: [Tops, Shoes, Accessories, Pants, Jackets]
+          enum: [Jackets, Tops, Pants, Shoes, Accessories]
       - name: name
         in: path
         description: Name of the garment
@@ -176,7 +176,7 @@ paths:
         explode: false
         schema:
           type: string
-          enum: [Tops, Shoes, Accessories, Pants, Jackets]
+          enum: [Jackets, Tops, Pants, Shoes, Accessories]
       - name: name
         in: path
         description: Name of the garment
@@ -219,7 +219,7 @@ paths:
         explode: false
         schema:
           type: string
-          enum: [Tops, Shoes, Accessories, Pants, Jackets]
+          enum: [Jackets, Tops, Pants, Shoes, Accessories]
       - name: name
         in: path
         description: Name of the garment

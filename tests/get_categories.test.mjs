@@ -15,56 +15,52 @@ test.before(async (t) => {
 test.after.always((t) => {
 	t.context.server.close();
 });
-test("GET /users/{user-id}/calendar returns correct response", async (t) => {
-    const response = await t.context.got('users/5/categories');
+
+// Response 200, it worked (for user id 45)
+test("GET /users/{userId}/categories returns correct response and status code", async (t) => {
+    const userId = 45;
+    const response = await t.context.got(`users/${userId}/categories`, { throwHttpErrors: false });
     t.is(response.statusCode, 200);
+    t.is(response.body[0], "Jackets");
+    t.is(response.body[1], "Tops");
 });
-// const error = await t.throwsAsync(() =>
-//     t.context.got('users/13/categories')
-// );
-// // Response 200, it worked (for user id 45)
-// test("GET /users/{user-id}/categories returns correct response and status code", async (t) => {
-// 	const response = {
-//         writeHead: (statusCode, headers) => {},
-//         end: (body) => {response.body = body;}};
-//     await getCategories(null, response, null, 45);
-//     const parsedBody = JSON.parse(response.body);
-//     t.is(parsedBody.statusCode, 200);
-//     t.is(parsedBody.body[0].name, "Jackets");
-//     t.is(parsedBody.body[1].name, "Tops");
-// });
 
-// // Response 404, user not found (for user id 145)
-// test("GET /users/{user-id}/categories returns 404 because userId doesn't exist", async (t) => {
-// 	const response = {
-//         writeHead: (statusCode, headers) => {},
-//         end: (body) => {response.body = body;}};
-//     await getCategories(null, response, null, 145);
-//     const parsedBody = JSON.parse(response.body);
-//     t.is(parsedBody.statusCode, 404);
-//     t.is(parsedBody.body, "User doesn't exist");
-// });
+// Response 404, user not found (for user id 145)
+test("GET /users/{userId}/categories returns 404 because userId doesn't exist", async (t) => {
+    const userId = 145;
+    const response = await t.context.got(`users/${userId}/categories`, { throwHttpErrors: false });
+    t.is(response.statusCode, 404);
+    t.is(response.body, "User doesn't exist");
+});
 
-// // Response 400, bad request (for user id -3)
-// test("GET /users/{user-id}/categories returns 400 because userId < 1", async (t) => {
-// 	const response = {
-//         writeHead: (statusCode, headers) => {},
-//         end: (body) => {response.body = body;}};
-//     await getCategories(null, response, null, -3);
-//     const parsedBody = JSON.parse(response.body);
-//     t.is(parsedBody.statusCode, 400);
-//     t.is(parsedBody.body, "User Id should be greater than 1");
-// });
+// Response 400, bad request (for negative user id -3)
+test("GET /users/{userId}/categories returns 400 because userId < 1", async (t) => {
+    const userId = -3;
+    const response = await t.context.got(`users/${userId}/categories`, { throwHttpErrors: false });
+    t.is(response.statusCode, 400);
+    t.is(response.body.message, "request.params.userId should be >= 1");
+});
 
+// Response 400, bad request (for string user id mpampis)
+test("GET /users/{userId}/categories returns 400 because userId was not integer", async (t) => {
+    const userId = "mpampis";
+    const response = await t.context.got(`users/${userId}/categories`, { throwHttpErrors: false });
+    t.is(response.statusCode, 400);
+    t.is(response.body.message, "request.params.userId should be integer");
+});
 
-// // Response 400, bad request (for user id mpampis)
-// test("GET /users/{user-id}/categories returns 400 because userId was not integer", async (t) => {
-// 	const response = {
-//         writeHead: (statusCode, headers) => {},
-//         end: (body) => {response.body = body;}};
-//     await getCategories(null, response, null, "mpampis");
-//     const parsedBody = JSON.parse(response.body);
-//     t.is(parsedBody.statusCode, 400);
-//     t.is(parsedBody.body, "User Id should be integer");
-// });
+// Response 404, bad request (for empty user id)
+test("GET /users/{userId}/categories returns 404 because userId was not given", async (t) => {
+    const userId = "";
+    const response = await t.context.got(`users/${userId}/categories`, { throwHttpErrors: false });
+    t.is(response.statusCode, 404);
+    t.is(response.body.message, "not found");
+});
 
+// Response 400, bad Request (for float user id 43.8)
+test("GET /users/{userId}/categories returns 400 because userId was float", async (t) => {
+    const userId = 43.8;
+    const response = await t.context.got(`users/${userId}/categories`, { throwHttpErrors: false });
+    t.is(response.statusCode, 400);
+    t.is(response.body.message, "request.params.userId should be integer");
+});

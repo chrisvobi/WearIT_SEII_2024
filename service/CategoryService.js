@@ -2,43 +2,34 @@
 
 var { correct_garment } = require("../utils/correct_garment.js");
 
+
+/**
+ * Get all categories for a user
+ * FR1 - The user must be able to manage their virtual wardrobe. Displays the categories to the user 
+ *
+ * userId String ID of the user
+ * returns List
+ **/
 exports.getCategories = function(userId) {
     return new Promise(function(resolve, reject) {
       var examples = {};
       examples['application/json'] = [
-        { "name": "Jackets" },
-        { "name": "Tops" },
-        { "name": "Pants" },
-        { "name": "Shoes" },
-        { "name": "Accessories" }
+        "Jackets", "Tops", "Pants", "Shoes", "Accessories"
       ];
-      if (userId >= 1 && userId <= 100) {
-        resolve({
-            body: examples[Object.keys(examples)[0]],
-            statusCode: 200
-        });
-      } else if (userId > 120) {
+      if (userId > 100) {
         reject({
             body: "User doesn't exist",
             statusCode: 404
         });
-      } else if (userId < 1) {
-        reject({
-            body: "User Id should be greater than 1",
-            statusCode: 400
-        });
-      } else if (!Number.isInteger(userId)) {
-        reject({
-            body: "User Id should be integer",
-            statusCode: 400
-        });
-      }
+      } else if (Object.keys(examples).length > 0) {
+        resolve({body: examples[Object.keys(examples)[0]]});
+      } 
     });
   }
 
   /**
  * Get all garments in a specific category for a user
- * FR1 - The user must be able to manage their virtual wardrobe. Displays the garments of a category to the user 
+ * FR2 - The user must be able to manage their virtual wardrobe. Displays the garments of a category to the user 
  *
  * userId String ID of the user
  * categoryName String Name of the category
@@ -101,7 +92,7 @@ exports.getCategoryGarments = function(userId,categoryName) {
   
   /**
  * Add a new garment to a specific category for a user
- * FR1 - The user must be able to manage their virtual wardrobe. Add a new garment to a specific category for a user 
+ * FR3 - The user must be able to manage their virtual wardrobe. Add a new garment to a specific category for a user 
  *
  * body Garment Garment model
  * userId String ID of the user
