@@ -16,10 +16,10 @@ module.exports.getCategories = function getCategories (req, res, next, userId) {
   module.exports.getCategoryGarments = async function getCategoryGarments (req, res, next, userId, categoryName) {
     await Category.getCategoryGarments(userId, categoryName)
       .then(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       })
       .catch(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       });
   };
 

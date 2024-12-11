@@ -2,7 +2,6 @@ import http from "node:http";
 import test from "ava";
 import got from "got";
 import app from "../index.js";
-import { getCategories } from "../controllers/Category.js";
 
 
 test.before(async (t) => {

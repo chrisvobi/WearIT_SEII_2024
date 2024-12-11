@@ -38,8 +38,8 @@ exports.getCategories = function(userId) {
 exports.getCategoryGarments = function(userId,categoryName) {
     return new Promise(function(resolve, reject) {
       var examples = {};
-      examples['application/json'] = {
-        "Tops": [
+      examples['application/json'] = { 
+        "45" : { "Tops": [
           {
             "size": "M",
             "imagePath": "../images/45/Black_Hoodie.jpeg",
@@ -51,8 +51,8 @@ exports.getCategoryGarments = function(userId,categoryName) {
             "name" : "Grey Crewneck",
             "brand" : "Zara"
           }
-        ],
-        "Shoes": [
+        ]},
+        "57": { "Shoes": [
           {
             "size" : "41",
             "imagePath" : "../images/57/White_Shoes.jpeg",
@@ -64,29 +64,11 @@ exports.getCategoryGarments = function(userId,categoryName) {
             "name" : "White Airforce Shoes",
             "brand" : "Nike"
           }
-        ]
+        ]}
       };
-      if (userId >= 1 && userId <= 100 && categoryName === "Tops") {
-        resolve({
-            body: examples[Object.keys(examples)][categoryName],
-            statusCode: 200
-          });
-      } else if (userId >= 1 && userId <= 100 && categoryName === "Shoes") {
-        resolve({
-            body: examples[Object.keys(examples)][categoryName],
-            statusCode: 200
-        });
-      } else if (userId >= 1 && userId <= 100 && typeof(categoryName) !== 'string') {
-        reject({
-            body: "Category isn't a string",
-            statusCode: 400
-        });
-      } else if (userId >= 1 && userId <= 100 && !(categoryName === "Shoes" || categoryName === "Tops" || categoryName === "Pants" || categoryName === "Jackets" || categoryName === "Accessories")) {
-        reject({
-            body: "Category doesn't exist",
-            statusCode: 404
-        });
-      }
+      if (Object.keys(examples).length > 0) {
+        resolve({body: examples[Object.keys(examples)][userId][categoryName]});
+      } 
     });
   }
   
