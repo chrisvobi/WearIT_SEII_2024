@@ -1,6 +1,5 @@
 'use strict';
 
-var { event_check } = require("../utils/event_check.js");
 var { correct_date } = require("../utils/correct_date.js");
 
 // GET users/{userId}/calendar
@@ -179,7 +178,7 @@ exports.getUserCalendarEvent = function(userId,date,eventName) {
   });
 }
 
-// PUT users/{user-id}/calendar/{date}/{event-name}
+// PUT users/{userId}/calendar/{date}/{eventName}
 exports.updateUserCalendarEvent = function(body,userId,date,eventName) {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -233,40 +232,30 @@ exports.updateUserCalendarEvent = function(body,userId,date,eventName) {
     "name" : "CoffeeDate"
   } ],
 }];
-if (Object.keys(examples).length > 0 && userId >= 1 && userId <= 120 && correct_date(date) && typeof(eventName) === 'string' && event_check(body)) {
-  const events = examples[Object.keys(examples)];
-  const eventIndex = events.findIndex(event => event.title === eventName);
-  if (eventIndex !== -1) {
-    const matchedEvent = events[eventIndex];
-    const [givenMonth, givenDay] = date;
-    if (givenMonth === matchedEvent.month && givenDay === matchedEvent.date) {
-      examples[Object.keys(examples)][eventIndex] = body;
-      resolve({
-        statusCode: 200,
-        message: examples[Object.keys(examples)][eventIndex]
-      });
-    } else {
-      reject({
-        statusCode: 404,
-        body: "Cannot find event, date and name don't match"
-      })
-    }
-  } else {
-    reject({
-      statusCode: 404,
-      body: "Event name doesn't exist"
-    })
-  }
-} else if (Object.keys(examples).length > 0 && userId >= 1 && userId <= 120 && correct_date(date) && typeof(eventName) === 'string' && !event_check(body)) {
-      reject({
-        statusCode: 400,
-        message: "Event object not given correctly"
-      });
-    } else if (userId >= 1 && userId <= 120 && typeof(eventName) === 'string' && !correct_date(date)) {
+    if (Object.keys(examples).length > 0) { // check that events exist
+      const events = examples[Object.keys(examples)];
+      const eventIndex = events.findIndex(event => event.title === eventName); // find event that matches the eventName
+      if (eventIndex !== -1) { // eventName exists
+        const date_array = date.split("-").map(Number);
+        const matchedEvent = events[eventIndex];
+        const [givenMonth, givenDay] = date_array;
+        if (givenMonth === matchedEvent.month && givenDay === matchedEvent.date) { // check if the dates match
+          examples[Object.keys(examples)][eventIndex] = body; // update with new event
+          resolve({
+            body: examples[Object.keys(examples)][eventIndex]
+          });
+        } else {
+          reject({ // dates dont match
+            statusCode: 404,
+            body: "Cannot find event, date and name don't match"
+          })
+        }
+      } else { // eventName doesnt exist
         reject({
-          statusCode: 400,
-          body: "Date given in wrong format"
-      })
+          statusCode: 404,
+          body: "Event name doesn't exist"
+        })
+      }
     }
   });
 }

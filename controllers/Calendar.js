@@ -36,14 +36,14 @@ module.exports.getUserCalendar = function getUserCalendar (req, res, next, userI
       });
   };
 
-  // PUT users/{user-id}/calendar/{date}/{event-name}
-  module.exports.updateUserCalendarEvent = async function updateUserCalendarEvent (req, res, next, body, userId, date, eventName) {
-    await Calendar.updateUserCalendarEvent(body, userId, date, eventName)
+  // PUT users/{userId}/calendar/{date}/{eventName}
+  module.exports.updateUserCalendarEvent = function updateUserCalendarEvent (req, res, next, body, userId, date, eventName) {
+    Calendar.updateUserCalendarEvent(body, userId, date, eventName)
       .then(function (response) {
         utils.writeJson(res, response);
       })
       .catch(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       });
   };
 
