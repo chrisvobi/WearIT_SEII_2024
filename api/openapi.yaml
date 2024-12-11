@@ -552,6 +552,11 @@ components:
           type: string
         imagePath:
           type: string
+      required:
+        - name
+        - brand
+        - size
+        - imagePath
       example:
         size: size
         imagePath: imagePath

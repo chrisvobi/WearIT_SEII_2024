@@ -13,8 +13,8 @@ module.exports.getCategories = function getCategories (req, res, next, userId) {
       });
   };
 
-  module.exports.getCategoryGarments = async function getCategoryGarments (req, res, next, userId, categoryName) {
-    await Category.getCategoryGarments(userId, categoryName)
+  module.exports.getCategoryGarments = function getCategoryGarments (req, res, next, userId, categoryName) {
+    Category.getCategoryGarments(userId, categoryName)
       .then(function (response) {
         utils.writeJson(res, response.body, response.statusCode);
       })
@@ -23,12 +23,12 @@ module.exports.getCategories = function getCategories (req, res, next, userId) {
       });
   };
 
-  module.exports.addGarment = async function addGarment (req, res, next, body, userId, categoryName) {
-    await Category.addGarment(body, userId, categoryName)
+  module.exports.addGarment = function addGarment (req, res, next, body, userId, categoryName) {
+    Category.addGarment(body, userId, categoryName)
       .then(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       })
       .catch(function (response) {
-        utils.writeJson(res, response);
+        utils.writeJson(res, response.body, response.statusCode);
       });
   };

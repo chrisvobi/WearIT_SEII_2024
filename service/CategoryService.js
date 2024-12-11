@@ -84,46 +84,39 @@ exports.getCategoryGarments = function(userId,categoryName) {
 exports.addGarment = function(body,userId,categoryName) {
     return new Promise(function(resolve, reject) {
       var examples = {};
-      examples['application/json'] = {
-        "Tops": [
+      examples['application/json'] = { 
+        "45" : { "Tops": [
           {
             "size": "M",
             "imagePath": "../images/45/Black_Hoodie.jpeg",
             "name": "Black Hoodie",
             "brand": "Nike"
           }
-        ],
-        "Shoes": [
+        ]},
+        "57": { "Shoes": [
           {
             "size" : "41",
             "imagePath" : "../images/57/White_Shoes.jpeg",
             "name" : "White Shoes",
             "brand" : "Converse"
           }
-        ]
+        ]}
       };
-      if ( userId < 1 || userId > 100) {
-        reject({
-            body: "User doesn't exist",
-            statusCode: 400
+      // Check if garment name already exists
+      const garments = examples[Object.keys(examples)][userId][categoryName];
+      const garmentIndex = garments.findIndex(garment => (garment.name == body.name));
+      if (garmentIndex != -1){
+          reject({
+              body: "Garment with given name already exists",
+              statusCode: 409
+          });
+      } else if (Object.keys(examples).length > 0) {
+        examples['application/json'][userId][categoryName].push(body); // add to DB
+        resolve({body: 
+          examples[Object.keys(examples)][userId][categoryName][1],
+          statusCode: 201
         });
-      } else if (correct_garment(body) && userId >= 1 && userId <= 100 && body.name != examples[Object.keys(examples)][categoryName][0].name) {
-        examples['application/json'][categoryName].push(body); // add body to examples
-        resolve({
-            body: examples[Object.keys(examples)][categoryName][1],
-            statusCode: 201
-        });
-      } else if (correct_garment(body) && userId >= 1 && userId <= 100 && body.name === examples[Object.keys(examples)][categoryName][0].name) {
-        reject({
-            body: "Garment with given name already exists",
-            statusCode: 409
-        });
-      } else if (!correct_garment(body)) {
-        reject({
-            body: "Garment object not given correctly",
-            statusCode: 400
-        });
-      }
+      } 
     });
   }
   
