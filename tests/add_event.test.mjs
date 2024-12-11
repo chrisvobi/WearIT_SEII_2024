@@ -6,9 +6,9 @@ import { generateRandomID } from "../utils/random_id.js";
 
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
-  const server = t.context.server.listen();
-  // const { port } = server.address();
-	t.context.got = got.extend({ responseType: "json", prefixUrl: `http://localhost:8080` });
+    const server = t.context.server.listen();
+    const { port } = server.address();
+	t.context.got = got.extend({ responseType: "json", prefixUrl: `http://localhost:${port}` });
 });
 
 test.after.always((t) => {
