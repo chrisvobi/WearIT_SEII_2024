@@ -26,7 +26,7 @@ module.exports.getGarment = function getGarment (req, res, next, userId, categor
   module.exports.deleteGarment = function deleteGarment (req, res, next, userId, categoryName, name) {
     Garment.deleteGarment(userId, categoryName, name)
       .then(function (response) {
-        utils.writeJson(res, response.body, response.statusCode);
+        utils.writeJson(res, response);
       })
       .catch(function (response) {
         utils.writeJson(res, response.body, response.statusCode);

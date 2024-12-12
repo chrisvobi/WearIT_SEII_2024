@@ -1,10 +1,9 @@
 'use strict';
 
-const { use } = require("../index.js");
-var { correct_garment } = require("../utils/correct_garment.js");
+
 /**
  * Get a specific garment in a specific category for a user
- * FR1 - The user must be able to manage their virtual wardrobe. Retrieve a specific garment in a specific category for a user. 
+ * FR4 - The user must be able to manage their virtual wardrobe. Retrieve a specific garment in a specific category for a user. 
  *
  * userId String ID of the user
  * categoryName String Name of the category
@@ -64,7 +63,7 @@ exports.getGarment = function(userId,categoryName,name) {
 
   /**
  * Edit a specific garment in a specific category for a user
- * FR1 - The user must be able to manage their virtual wardrobe. Edit a specific garment in a specific category for a user 
+ * FR5 - The user must be able to manage their virtual wardrobe. Edit a specific garment in a specific category for a user 
  *
  * body Garment Garment model
  * userId String ID of the user
@@ -72,9 +71,6 @@ exports.getGarment = function(userId,categoryName,name) {
  * name String Name of the garment
  * returns Garment
  **/
-// categoryName is the category of the garment to be edited
-// name is the existing name of the garment to be edited
-// body has all the info of the edit to take place
 exports.editGarment = function(body,userId,categoryName,name) {
     return new Promise(function(resolve, reject) {
       var examples = {};
@@ -134,7 +130,7 @@ exports.editGarment = function(body,userId,categoryName,name) {
 
 /**
  * Remove a specific garment in a specific category for a user
- * FR1 - The user must be able to manage their virtual wardrobe. Remove a specific garment in a specific category for a user 
+ * FR6 - The user must be able to manage their virtual wardrobe. Remove a specific garment in a specific category for a user 
  *
  * userId String ID of the user
  * categoryName String Name of the category
@@ -176,14 +172,13 @@ exports.deleteGarment = function(userId,categoryName,name) {
       var garments = examples[Object.keys(examples)][userId][categoryName];
       var garmentIndex = garments.findIndex(garment => garment.name === name);
       if (garmentIndex !== -1) {
-        examples[Object.keys(examples)][userId][categoryName].splice(garmentIndex, 1); // remove said garment from examples
+        examples[Object.keys(examples)][userId][categoryName].splice(garmentIndex, 1); // remove said garment from DB
         garments = examples[Object.keys(examples)][userId][categoryName];
         garmentIndex = garments.findIndex(garment => garment.name === name);// check if garment was successfully removed
-        if (garmentIndex === -1) {
+        if (garmentIndex == -1) {
           resolve({
-            body: JSON.stringify({ message: "Garment deleted successfully" }),
-            statusCode: 200
-          });
+            body: "Garment deleted successfully"
+          })
         } else {
           reject({
             body: "Something went wrong",

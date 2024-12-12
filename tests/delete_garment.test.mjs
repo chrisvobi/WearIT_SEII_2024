@@ -23,8 +23,9 @@ test("DELETE /users/{userId}/categories/{categoryName}/garments/{name} successfu
     const category = "Tops"
     const name = "Grey Crewneck"
     const response = await t.context.got.delete(`users/${userId}/categories/${category}/garments/${name}`, { throwHttpErrors: false });
+    console.log(response.body)
     t.is(response.statusCode, 200);
-    t.is(response.body.message, "Garment deleted successfully");
+    t.is(response.body.body, "Garment deleted successfully");
 });
 
 // Response 400, bad request, garment name doesn't exist 

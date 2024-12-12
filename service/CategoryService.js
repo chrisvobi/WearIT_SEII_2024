@@ -1,7 +1,5 @@
 'use strict';
 
-var { correct_garment } = require("../utils/correct_garment.js");
-
 
 /**
  * Get all categories for a user
