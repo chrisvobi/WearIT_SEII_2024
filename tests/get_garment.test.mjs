@@ -75,6 +75,6 @@ test("GET /users/{user-id}/categories/{category-name}/garments/{name} returns ba
     const category = "Tops"
     const name = "Balck Hoodie"
     const response = await t.context.got(`users/${userId}/categories/${category}/garments/${name}`, { throwHttpErrors: false });
-    t.is(response.statusCode, 400);
+    t.is(response.statusCode, 404);
     t.is(response.body, "Garment doesn't exist");
 });

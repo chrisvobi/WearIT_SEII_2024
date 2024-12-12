@@ -23,7 +23,6 @@ test("DELETE /users/{userId}/categories/{categoryName}/garments/{name} successfu
     const category = "Tops"
     const name = "Grey Crewneck"
     const response = await t.context.got.delete(`users/${userId}/categories/${category}/garments/${name}`, { throwHttpErrors: false });
-    console.log(response.body)
     t.is(response.statusCode, 200);
     t.is(response.body.body, "Garment deleted successfully");
 });
@@ -34,7 +33,7 @@ test("DELETE /users/{userId}/categories/{categoryName}/garments/{name} bad reque
     const category = "Tops"
     const name = "GreY Crewneck"
     const response = await t.context.got.delete(`users/${userId}/categories/${category}/garments/${name}`, { throwHttpErrors: false });
-    t.is(response.statusCode, 400);
+    t.is(response.statusCode, 404);
     t.is(response.body, "Garment doesn't exist");
 });
 

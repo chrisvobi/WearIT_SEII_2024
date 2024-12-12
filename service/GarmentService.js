@@ -52,7 +52,7 @@ exports.getGarment = function(userId,categoryName,name) {
         if (garmentIndex == -1){ // Check if garment name doesn't exist in DB 
           reject({
                   body: "Garment doesn't exist",
-                  statusCode: 400
+                  statusCode: 404
           });
         } else {
           resolve({body: examples[Object.keys(examples)][userId][categoryName][garmentIndex]});
@@ -187,7 +187,7 @@ exports.deleteGarment = function(userId,categoryName,name) {
       } else {
         reject({
             body: "Garment doesn't exist",
-            statusCode: 400
+            statusCode: 404
         })
       }  
     });
