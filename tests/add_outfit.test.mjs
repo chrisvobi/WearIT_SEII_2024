@@ -4,7 +4,7 @@ import got from "got";
 import app from "../index.js";
 import { generateRandomID } from "../utils/random_id.js";
 
-import { validOutfit, invalidOutfit } from "../utils/outfits.js";
+import { validOutfit, invalidOutfit } from "../utils/outfits.js"; // valid and invalid outfits user tries to post
 
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
