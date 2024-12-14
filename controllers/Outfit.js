@@ -3,12 +3,13 @@
 var utils = require('../utils/writer.js');
 var Outfit = require('../service/OutfitService');
 
-module.exports.createOutfit = async function createOutfit (req, res, next, body, userId) {
-    await Outfit.createOutfit(body, userId)
-      .then(function (response) {
-        utils.writeJson(res, response);
-      })
-      .catch(function (response) {
-        utils.writeJson(res, response);
-      });
-  };
+// POST /users/{userId}/outfit
+module.exports.createOutfit = function createOutfit (req, res, next, body, userId) {
+  Outfit.createOutfit(body, userId)
+    .then(function (response) {
+      utils.writeJson(res, response, 201);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response.body, response.statusCode);
+    });
+};

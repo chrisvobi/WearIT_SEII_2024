@@ -1,6 +1,24 @@
 'use strict';
 
+// POST /users/{userId}/outfit
 exports.createOutfit = function(body,userId) {
+  return new Promise(function(resolve, reject) {
+    var examples = {};
+    examples['application/json'] = [];
+    examples['application/json'].push(body);
+    if (userId>120) {
+      reject({
+        statusCode: 404,
+        body: "User doesn't exist"
+      })
+    }
+    else if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)][0]);
+    }
+  });
+}
+
+/* exports.createOutfit = function(body,userId) {
     return new Promise(function(resolve, reject) {
       var examples = {};
       examples['application/json'] = [];
@@ -17,4 +35,4 @@ exports.createOutfit = function(body,userId) {
         });
       }
     });
-  }
+  } */
