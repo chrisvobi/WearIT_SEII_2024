@@ -49,7 +49,7 @@ test("GET /users/{user-id}/categories/{category-name}/garments/{name} returns ba
     t.is(response.body, "User doesn't exist");
 });
 
-// Response 404, bad request, user doesn't exist
+// Response 400, bad request, user doesn't exist
 test("GET /users/{user-id}/categories/{category-name}/garments/{name} returns bad request because of negative user id", async (t) => {
 	const userId = -3;
     const category = "Tops"
@@ -69,7 +69,7 @@ test("GET /users/{user-id}/categories/{category-name}/garments/{name} returns ba
     t.is(response.body.message, "request.params.categoryName should be equal to one of the allowed values: Jackets, Tops, Pants, Shoes, Accessories")
 });
 
-// Response 400, bad request, garment doesn't exist
+// Response 404, bad request, garment doesn't exist
 test("GET /users/{user-id}/categories/{category-name}/garments/{name} returns bad request because of incorrect garment name", async (t) => {
 	const userId = 45;
     const category = "Tops"

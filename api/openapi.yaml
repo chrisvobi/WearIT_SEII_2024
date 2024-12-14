@@ -37,6 +37,18 @@ paths:
                 items:
                   $ref: '#/components/schemas/Category'
                 x-content-type: application/json
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Category
   /users/{userId}/categories/{categoryName}/garments:
     get:
@@ -74,6 +86,12 @@ paths:
                 items:
                   $ref: '#/components/schemas/Garment'
                 x-content-type: application/json
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Category
     post:
       summary: Add a new garment to a specific category for a user
@@ -103,12 +121,24 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/Garment'
       responses:
-        "200":
-          description: Default response
+        "201":
+          description: Successful adition of garment
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Garment'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "409":
+          description: Error Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Category
   /users/{userId}/categories/{categoryName}/garments/{name}:
     get:
@@ -151,6 +181,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Garment'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Garment
     put:
       summary: Edit a specific garment in a specific category for a user
@@ -194,6 +236,24 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Garment'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "409":
+          description: Error Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Garment
     delete:
       summary: Remove a specific garment in a specific category for a user
@@ -231,6 +291,18 @@ paths:
       responses:
         "200":
           description: Default response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
           content:
             application/json:
               schema:
