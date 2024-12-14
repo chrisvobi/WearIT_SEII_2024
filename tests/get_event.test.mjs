@@ -78,7 +78,7 @@ test("GET users/{userId}/calendar/{date}/{eventName} returns 400 because userId 
 });
 
 // 404 not found because eventName was not given
-test("GET users/{userId}/calendar/{date}/{eventName} returns 400 eventName not given", async (t) => {
+test("GET users/{userId}/calendar/{date}/{eventName} returns 404 eventName not given", async (t) => {
     const userId = generateRandomID(1, 120);
     const date = "12-01"; // date given in string format MM-DD
     const eventName = "";
