@@ -244,12 +244,30 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/Outfit'
       responses:
-        "200":
-          description: Default response
+        "201":
+          description: New resource created
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "405":
+          description: Error Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Outfit
   /users/{userId}/outfits/{name}:
     get:
@@ -276,11 +294,23 @@ paths:
           minLength: 1
       responses:
         "200":
-          description: Default response
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Outfit
     put:
       summary: The user updates an outfit
@@ -310,11 +340,23 @@ paths:
         $ref: '#/components/requestBodies/Outfit'
       responses:
         "200":
-          description: Default response
+          description: Resource updated
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Outfit
     delete:
       summary: Delete outfit from user account
@@ -342,7 +384,19 @@ paths:
           minLength: 1
       responses:
         "200":
-          description: Default response
+          description: Successfull deletion
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
           content:
             application/json:
               schema:
