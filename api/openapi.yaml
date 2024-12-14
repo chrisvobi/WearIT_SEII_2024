@@ -26,6 +26,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       responses:
         "200":
           description: Default response
@@ -36,12 +37,24 @@ paths:
                 items:
                   $ref: '#/components/schemas/Category'
                 x-content-type: application/json
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Category
   /users/{userId}/categories/{categoryName}/garments:
     get:
       summary: Get all garments in a specific category for a user
       description: |
-        FR1 - The user must be able to manage their virtual wardrobe.
+        FR2 - The user must be able to manage their virtual wardrobe.
         Displays the garments of a category to the user
       operationId: getCategoryGarments
       parameters:
@@ -53,6 +66,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: categoryName
         in: path
         description: Name of the category
@@ -61,6 +75,7 @@ paths:
         explode: false
         schema:
           type: string
+          enum: [Jackets, Tops, Pants, Shoes, Accessories]
       responses:
         "200":
           description: Default response
@@ -71,11 +86,17 @@ paths:
                 items:
                   $ref: '#/components/schemas/Garment'
                 x-content-type: application/json
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Category
     post:
       summary: Add a new garment to a specific category for a user
       description: |
-        FR1 - The user must be able to manage their virtual wardrobe.
+        FR3 - The user must be able to manage their virtual wardrobe.
         Add a new garment to a specific category for a user
       operationId: addGarment
       parameters:
@@ -87,6 +108,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: categoryName
         in: path
         description: Name of the category
@@ -95,21 +117,34 @@ paths:
         explode: false
         schema:
           type: string
+          enum: [Jackets, Tops, Pants, Shoes, Accessories]
       requestBody:
         $ref: '#/components/requestBodies/Garment'
       responses:
-        "200":
-          description: Default response
+        "201":
+          description: Successful adition of garment
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Garment'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "409":
+          description: Error Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Category
   /users/{userId}/categories/{categoryName}/garments/{name}:
     get:
       summary: Get a specific garment in a specific category for a user
       description: |
-        FR1 - The user must be able to manage their virtual wardrobe.
+        FR4 - The user must be able to manage their virtual wardrobe.
         Retrieve a specific garment in a specific category for a user.
       operationId: getGarment
       parameters:
@@ -121,6 +156,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: categoryName
         in: path
         description: Name of the category
@@ -129,6 +165,7 @@ paths:
         explode: false
         schema:
           type: string
+          enum: [Jackets, Tops, Pants, Shoes, Accessories]
       - name: name
         in: path
         description: Name of the garment
@@ -144,11 +181,23 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Garment'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Garment
     put:
       summary: Edit a specific garment in a specific category for a user
       description: |
-        FR1 - The user must be able to manage their virtual wardrobe.
+        FR5 - The user must be able to manage their virtual wardrobe.
         Edit a specific garment in a specific category for a user
       operationId: editGarment
       parameters:
@@ -160,6 +209,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: categoryName
         in: path
         description: Name of the category
@@ -168,6 +218,7 @@ paths:
         explode: false
         schema:
           type: string
+          enum: [Jackets, Tops, Pants, Shoes, Accessories]
       - name: name
         in: path
         description: Name of the garment
@@ -185,11 +236,29 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Garment'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "409":
+          description: Error Conflict
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Garment
     delete:
       summary: Remove a specific garment in a specific category for a user
       description: |
-        FR1 - The user must be able to manage their virtual wardrobe.
+        FR6 - The user must be able to manage their virtual wardrobe.
         Remove a specific garment in a specific category for a user
       operationId: deleteGarment
       parameters:
@@ -201,6 +270,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: categoryName
         in: path
         description: Name of the category
@@ -209,6 +279,7 @@ paths:
         explode: false
         schema:
           type: string
+          enum: [Jackets, Tops, Pants, Shoes, Accessories]
       - name: name
         in: path
         description: Name of the garment
@@ -224,7 +295,19 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Garment
   /users/{userId}/outfits:
     post:
       summary: The user adds an outfit
@@ -240,16 +323,35 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       requestBody:
         $ref: '#/components/requestBodies/Outfit'
       responses:
-        "200":
-          description: Default response
+        "201":
+          description: New resource created
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "405":
+          description: Error Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Outfit
   /users/{userId}/outfits/{name}:
     get:
       summary: Retrieve outfit
@@ -263,6 +365,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: name
         in: path
         description: the name of the outfit
@@ -271,14 +374,27 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       responses:
         "200":
-          description: Default response
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Outfit
     put:
       summary: The user updates an outfit
       description: |
@@ -293,6 +409,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: name
         in: path
         description: the name of the outfit
@@ -301,16 +418,29 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       requestBody:
         $ref: '#/components/requestBodies/Outfit'
       responses:
         "200":
-          description: Default response
+          description: Resource updated
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Outfit
     delete:
       summary: Delete outfit from user account
       description: |
@@ -325,6 +455,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: name
         in: path
         description: the name of the outfit
@@ -333,14 +464,27 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       responses:
         "200":
-          description: Default response
+          description: Successfull deletion
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Outfit
   /users/{userId}/calendar:
     get:
       summary: Retrieve user's calendar
@@ -574,6 +718,12 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
         "404":
           description: Error Not Found
           content:
@@ -613,6 +763,11 @@ components:
           type: string
         imagePath:
           type: string
+      required:
+        - name
+        - brand
+        - size
+        - imagePath
       example:
         size: size
         imagePath: imagePath
@@ -653,6 +808,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Garment'
+      required:
+        - name
+        - garments
       example:
         garments:
         - size: size
