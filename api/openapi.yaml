@@ -323,16 +323,35 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       requestBody:
         $ref: '#/components/requestBodies/Outfit'
       responses:
-        "200":
-          description: Default response
+        "201":
+          description: New resource created
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "405":
+          description: Error Method Not Allowed
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Outfit
   /users/{userId}/outfits/{name}:
     get:
       summary: Retrieve outfit
@@ -346,6 +365,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: name
         in: path
         description: the name of the outfit
@@ -354,14 +374,27 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       responses:
         "200":
-          description: Default response
+          description: Successful Operation
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Outfit
     put:
       summary: The user updates an outfit
       description: |
@@ -376,6 +409,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: name
         in: path
         description: the name of the outfit
@@ -384,16 +418,29 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       requestBody:
         $ref: '#/components/requestBodies/Outfit'
       responses:
         "200":
-          description: Default response
+          description: Resource updated
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Outfit
     delete:
       summary: Delete outfit from user account
       description: |
@@ -408,6 +455,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: name
         in: path
         description: the name of the outfit
@@ -416,14 +464,27 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       responses:
         "200":
-          description: Default response
+          description: Successfull deletion
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Outfit
   /users/{userId}/calendar:
     get:
       summary: Retrieve user's calendar
@@ -442,7 +503,7 @@ paths:
           minimum: 1
       responses:
         "200":
-          description: Successful operation
+          description: Successful Operation
           content:
             application/json:
               schema:
@@ -450,6 +511,24 @@ paths:
                 items:
                   $ref: '#/components/schemas/Event'
                 x-content-type: application/json
+        "204":
+          description: Successful Operation No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Calendar
     post:
       summary: Add a new event to the user's calendar
@@ -469,12 +548,24 @@ paths:
       requestBody:
         $ref: '#/components/requestBodies/Event'
       responses:
-        "200":
+        "201":
           description: Successful addition of the event
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Calendar
   /users/{userId}/calendar/{date}/{eventName}:
     get:
@@ -517,6 +608,18 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Calendar
     put:
       summary: Update a specific event in the user's calendar
@@ -530,6 +633,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: date
         in: path
         description: The date of the event
@@ -538,6 +642,7 @@ paths:
         explode: false
         schema:
           type: string
+          pattern: "^(?:(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))$" # enforces MM-DD pattern for dates
       - name: eventName
         in: path
         description: The name of the event
@@ -546,16 +651,29 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       requestBody:
         $ref: '#/components/requestBodies/Event'
       responses:
         "200":
-          description: Successful retrieval of the event
+          description: Successful update of the event
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Calendar
     delete:
       summary: Delete a specific event from the user's calendar
       operationId: deleteUserCalendarEvent
@@ -568,6 +686,7 @@ paths:
         explode: false
         schema:
           type: integer
+          minimum: 1
       - name: date
         in: path
         description: The date of the event
@@ -576,6 +695,7 @@ paths:
         explode: false
         schema:
           type: string
+          pattern: "^(?:(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))$" # enforces MM-DD pattern for dates
       - name: eventName
         in: path
         description: The name of the event
@@ -584,14 +704,27 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       responses:
         "200":
-          description: Default response
+          description: Successfull deletion of event
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      x-swagger-router-controller: Default
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Calendar
 components:
   schemas:
     User:
@@ -669,6 +802,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Garment'
+      required:
+        - name
+        - garments
       example:
         garments:
         - size: size
