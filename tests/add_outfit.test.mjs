@@ -26,6 +26,7 @@ test("POST /users/{userId}/outfits returns 201 and the Outfit the user adds", as
   const response = await t.context.got.post(`users/${userId}/outfits`, { throwHttpErrors: false,
     json: validOutfit
  });
+  console.log(response.statusCode,response.body);
   t.is(response.statusCode, 201);
   t.deepEqual(response.body, validOutfit);
 });
