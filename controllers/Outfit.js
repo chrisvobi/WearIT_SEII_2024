@@ -35,3 +35,14 @@ module.exports.updateOutfit = function updateOutfit (req, res, next, body, userI
       utils.writeJson(res, response.body, response.statusCode);
     });
 };
+
+// DELETE users/{userId}/outfits/{name}
+module.exports.deleteOutfit = function deleteOutfit (req, res, next, userId, name) {
+  Outfit.deleteOutfit(userId, name)
+    .then(function (response) {
+      utils.writeJson(res, response);
+    })
+    .catch(function (response) {
+      utils.writeJson(res, response.body, response.statusCode);
+    });
+};
