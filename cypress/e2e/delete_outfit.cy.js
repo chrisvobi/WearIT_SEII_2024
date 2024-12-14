@@ -6,9 +6,9 @@ describe('Delete outfit UI test', () => {
 
     it('Check if it is displayed correctly', () => {
         cy.get('p').contains("FR9 - The user must be able to delete saved outfits.")
-        cy.get(".content-type").should('have.length', 1) // media type menu
+        cy.get(".content-type").should('have.length', 3) // media type menu
         cy.get(".response-col_status").contains(200) // check default response appearing on ui
-        cy.get(".response-col_description").contains("Default response")
+        cy.get(".response-col_description").contains("Successfull deletion")
         cy.get(".highlight-code").contains("{}")
     })
 
