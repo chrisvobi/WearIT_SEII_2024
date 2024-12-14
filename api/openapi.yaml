@@ -10,7 +10,7 @@ info:
     url: https://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 paths:
-  /users/{user-id}/categories:
+  /users/{userId}/categories:
     get:
       summary: Get all categories for a user
       description: |
@@ -18,14 +18,14 @@ paths:
         Displays the categories to the user
       operationId: getCategories
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: ID of the user
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
       responses:
         "200":
           description: Default response
@@ -37,7 +37,7 @@ paths:
                   $ref: '#/components/schemas/Category'
                 x-content-type: application/json
       x-swagger-router-controller: Default
-  /users/{user-id}/categories/{category-name}/garments:
+  /users/{userId}/categories/{categoryName}/garments:
     get:
       summary: Get all garments in a specific category for a user
       description: |
@@ -45,15 +45,15 @@ paths:
         Displays the garments of a category to the user
       operationId: getCategoryGarments
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: ID of the user
         required: true
         style: simple
         explode: false
         schema:
-          type: string
-      - name: category-name
+          type: integer
+      - name: categoryName
         in: path
         description: Name of the category
         required: true
@@ -79,15 +79,15 @@ paths:
         Add a new garment to a specific category for a user
       operationId: addGarment
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: ID of the user
         required: true
         style: simple
         explode: false
         schema:
-          type: string
-      - name: category-name
+          type: integer
+      - name: categoryName
         in: path
         description: Name of the category
         required: true
@@ -105,7 +105,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Garment'
       x-swagger-router-controller: Default
-  /users/{user-id}/categories/{category-name}/garments/{name}:
+  /users/{userId}/categories/{categoryName}/garments/{name}:
     get:
       summary: Get a specific garment in a specific category for a user
       description: |
@@ -113,15 +113,15 @@ paths:
         Retrieve a specific garment in a specific category for a user.
       operationId: getGarment
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: ID of the user
         required: true
         style: simple
         explode: false
         schema:
-          type: string
-      - name: category-name
+          type: integer
+      - name: categoryName
         in: path
         description: Name of the category
         required: true
@@ -152,15 +152,15 @@ paths:
         Edit a specific garment in a specific category for a user
       operationId: editGarment
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: ID of the user
         required: true
         style: simple
         explode: false
         schema:
-          type: string
-      - name: category-name
+          type: integer
+      - name: categoryName
         in: path
         description: Name of the category
         required: true
@@ -193,15 +193,15 @@ paths:
         Remove a specific garment in a specific category for a user
       operationId: deleteGarment
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: ID of the user
         required: true
         style: simple
         explode: false
         schema:
-          type: string
-      - name: category-name
+          type: integer
+      - name: categoryName
         in: path
         description: Name of the category
         required: true
@@ -225,21 +225,22 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
       x-swagger-router-controller: Default
-  /users/{user-id}/outfits:
+  /users/{userId}/outfits:
     post:
       summary: The user adds an outfit
       description: |
         FR7-The user must be able to save outfits.
       operationId: createOutfit
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: user that creates the outfit
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
+          minimum: 1
       requestBody:
         $ref: '#/components/requestBodies/Outfit'
       responses:
@@ -249,20 +250,21 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
-      x-swagger-router-controller: Default
-  /users/{user-id}/outfits/{name}:
+      x-swagger-router-controller: Outfit
+  /users/{userId}/outfits/{name}:
     get:
       summary: Retrieve outfit
       operationId: getOutfit
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: the id of the user
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
+          minimum: 1
       - name: name
         in: path
         description: the name of the outfit
@@ -271,6 +273,7 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       responses:
         "200":
           description: Default response
@@ -278,21 +281,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
-      x-swagger-router-controller: Default
+      x-swagger-router-controller: Outfit
     put:
       summary: The user updates an outfit
       description: |
         FR8-The user must be able to edit saved outfits.
       operationId: updateOutfit
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: user that updates the outfit
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
+          minimum: 1
       - name: name
         in: path
         description: the name of the outfit
@@ -301,6 +305,7 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       requestBody:
         $ref: '#/components/requestBodies/Outfit'
       responses:
@@ -310,21 +315,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Outfit'
-      x-swagger-router-controller: Default
+      x-swagger-router-controller: Outfit
     delete:
       summary: Delete outfit from user account
       description: |
         FR9 - The user must be able to delete saved outfits.
       operationId: deleteOutfit
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: user that deletes the outfit
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
+          minimum: 1
       - name: name
         in: path
         description: the name of the outfit
@@ -333,6 +339,7 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       responses:
         "200":
           description: Default response
@@ -340,25 +347,26 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      x-swagger-router-controller: Default
-  /users/{user-id}/calendar:
+      x-swagger-router-controller: Outfit
+  /users/{userId}/calendar:
     get:
       summary: Retrieve user's calendar
       description: |
         FR6-The user must be able to plan their future outfits.
       operationId: getUserCalendar
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: the id of the user
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
+          minimum: 1
       responses:
         "200":
-          description: Successful operation
+          description: Successful Operation
           content:
             application/json:
               schema:
@@ -366,46 +374,78 @@ paths:
                 items:
                   $ref: '#/components/schemas/Event'
                 x-content-type: application/json
-      x-swagger-router-controller: Default
+        "204":
+          description: Successful Operation No Content
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Calendar
     post:
       summary: Add a new event to the user's calendar
       description: |
         FR6-The user must be able to plan their future outfits.
       operationId: addUserCalendarEvent
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: the id of the user
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
+          minimum: 1
       requestBody:
         $ref: '#/components/requestBodies/Event'
       responses:
-        "200":
+        "201":
           description: Successful addition of the event
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
-      x-swagger-router-controller: Default
-  /users/{user-id}/calendar/{date}/{event-name}:
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Calendar
+  /users/{userId}/calendar/{date}/{eventName}:
     get:
       summary: Retrieve a specific event from the user's calendar
       description: |
         FR6-The user must be able to plan their future outfits.
       operationId: getUserCalendarEvent
       parameters:
-      - name: user-id
+      - name: userId
         in: path
         description: The unique identifier of the user
         required: true
         style: simple
         explode: false
         schema:
-          type: string
+          type: integer
+          minimum: 1
       - name: date
         in: path
         description: The date of the event
@@ -414,7 +454,8 @@ paths:
         explode: false
         schema:
           type: string
-      - name: event-name
+          pattern: "^(?:(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))$" # enforces MM-DD pattern for dates
+      - name: eventName
         in: path
         description: The name of the event
         required: true
@@ -422,6 +463,7 @@ paths:
         explode: false
         schema:
           type: string
+          minLength: 1
       responses:
         "200":
           description: Successful retrieval of the event
@@ -429,87 +471,129 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/Event'
-      x-swagger-router-controller: Default
-    put:
-      summary: Update a specific event in the user's calendar
-      operationId: updateUserCalendarEvent
-      parameters:
-      - name: user-id
-        in: path
-        description: The unique identifier of the user
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: date
-        in: path
-        description: The date of the event
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: event-name
-        in: path
-        description: The name of the event
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      requestBody:
-        $ref: '#/components/requestBodies/Event'
-      responses:
-        "200":
-          description: Successful retrieval of the event
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Event'
-      x-swagger-router-controller: Default
-    delete:
-      summary: Delete a specific event from the user's calendar
-      operationId: deleteUserCalendarEvent
-      parameters:
-      - name: user-id
-        in: path
-        description: The unique identifier of the user
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: date
-        in: path
-        description: The date of the event
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      - name: event-name
-        in: path
-        description: The name of the event
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Default response
+        "400":
+          description: Error Bad Request
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
-      x-swagger-router-controller: Default
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Calendar
+    put:
+      summary: Update a specific event in the user's calendar
+      operationId: updateUserCalendarEvent
+      parameters:
+      - name: userId
+        in: path
+        description: The unique identifier of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          minimum: 1
+      - name: date
+        in: path
+        description: The date of the event
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          pattern: "^(?:(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))$" # enforces MM-DD pattern for dates
+      - name: eventName
+        in: path
+        description: The name of the event
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          minLength: 1
+      requestBody:
+        $ref: '#/components/requestBodies/Event'
+      responses:
+        "200":
+          description: Successful update of the event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Calendar
+    delete:
+      summary: Delete a specific event from the user's calendar
+      operationId: deleteUserCalendarEvent
+      parameters:
+      - name: userId
+        in: path
+        description: The unique identifier of the user
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: integer
+          minimum: 1
+      - name: date
+        in: path
+        description: The date of the event
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          pattern: "^(?:(0[13578]|1[02])-(0[1-9]|[12][0-9]|3[01])|(0[469]|11)-(0[1-9]|[12][0-9]|30)|02-(0[1-9]|1[0-9]|2[0-8]))$" # enforces MM-DD pattern for dates
+      - name: eventName
+        in: path
+        description: The name of the event
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+          minLength: 1
+      responses:
+        "200":
+          description: Successfull deletion of event
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "400":
+          description: Error Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        "404":
+          description: Error Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+      x-swagger-router-controller: Calendar
 components:
   schemas:
     User:
       type: object
       properties:
-        user-id:
+        userId:
           type: integer
         username:
           type: string
@@ -576,6 +660,9 @@ components:
           type: array
           items:
             $ref: '#/components/schemas/Garment'
+      required:
+        - name
+        - garments
       example:
         garments:
         - size: size
@@ -614,24 +701,18 @@ components:
         title:
           type: string
         planndedOutfit:
-          type: array
-          items:
-            $ref: '#/components/schemas/Outfit'
+          $ref: '#/components/schemas/Outfit'
+      required:
+        - month
+        - date
+        - day
+        - title
+        - planndedOutfit
       example:
         date: 6
         month: 0
         planndedOutfit:
-        - garments:
-          - size: size
-            imagePath: imagePath
-            name: name
-            brand: brand
-          - size: size
-            imagePath: imagePath
-            name: name
-            brand: brand
-          name: name
-        - garments:
+          garments:
           - size: size
             imagePath: imagePath
             name: name
