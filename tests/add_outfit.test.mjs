@@ -18,6 +18,7 @@ test.after.always((t) => {
 });
 
 // App has ~120 users. any id above 120 doesn't exist (no registered user yet)
+// Some tests might be ignored here (for assignment purposes) as they were tested in other files
 
 // 201 new resource created, also returns the outfit user created
 test("POST /users/{userId}/outfits returns 201 and the Outfit the user adds", async (t) => {

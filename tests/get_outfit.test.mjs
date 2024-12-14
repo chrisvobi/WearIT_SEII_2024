@@ -16,6 +16,7 @@ test.after.always((t) => {
 });
 
 // App has ~120 users. any id above 120 doesn't exist (no registered user yet)
+// Some tests might be ignored here (for assignment purposes) as they were tested in other files
 
 // 200 code, userId, name given correctly
 test("GET users/{userId}/outfits/{name} returns correct response and status code", async (t) => {
