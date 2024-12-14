@@ -8,7 +8,7 @@ describe('Put outfit UI test', () => {
         cy.get('p').contains("FR8-The user must be able to edit saved outfits.") // check if it contains the description
         cy.get('.model-example').contains('garments') // check if it contains the response body
         cy.get(".response-col_status").contains(200) // check if it contains the default response
-        cy.get(".response-col_description").contains("Default response")
+        cy.get(".response-col_description").contains("Resource updated")
         cy.get(".response-col_description").contains("garment")
     })
 
