@@ -20,7 +20,8 @@
     "c8": "^8.0.1",
     "cypress": "^13.16.1",
     "got": "^11.8.3",
-    "test-listen": "^1.1.0"
+    "test-listen": "^1.1.0",
+    "body-parser": "^1.20.3"
   },
   "dependencies": {
     "connect": "^3.2.0",
