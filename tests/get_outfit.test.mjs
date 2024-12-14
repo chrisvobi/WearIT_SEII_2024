@@ -56,6 +56,7 @@ test("GET users/{userId}/outfits/{name} returns 400 because userId is not intege
 
 // 405 method not allowed because name was not given
 // tries to get users/{userId}/outfits which only allows post method
+// could be a test for users/{userId}/outfits endpoint
 test("GET users/{userId}/outfits/{name} returns 405 name not given", async (t) => {
     const userId = generateRandomID(1, 120);
     const name = "";

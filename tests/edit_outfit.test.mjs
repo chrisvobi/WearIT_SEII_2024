@@ -46,6 +46,7 @@ test("PUT users/{userId}/outfits/{name} returns 404 name doesnt exist", async (t
 
 // 405 method not allowed because name was not given
 // tries to put users/{userId}/outfits which only allows post method
+// could be a test for users/{userId}/outfits endpoint
 test("PUT users/{userId}/outfits/{name} returns 405 name not given", async (t) => {
     const userId = generateRandomID(1, 120);
     const name = "";
