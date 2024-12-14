@@ -22,11 +22,10 @@ test.after.always((t) => {
 
 // 201 new resource created, also returns the outfit user created
 test("POST /users/{userId}/outfits returns 201 and the Outfit the user adds", async (t) => {
-  const userId = generateRandomID(0, 120); // example id
+  const userId = generateRandomID(1, 120); // example id
   const response = await t.context.got.post(`users/${userId}/outfits`, { throwHttpErrors: false,
     json: validOutfit
  });
-  console.log(response.statusCode,response.body);
   t.is(response.statusCode, 201);
   t.deepEqual(response.body, validOutfit);
 });
