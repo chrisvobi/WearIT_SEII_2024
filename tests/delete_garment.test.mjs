@@ -14,7 +14,7 @@ test.after.always((t) => {
 	t.context.server.close();
 });
 
-// Checks for extensive user id testing and correct category names have already been implemented in other files
+// User id testing and correct category names have already been tested in other files
 
 /**
 * Various tests for path DELETE /users/{userId}/categories/{categoryName}/garments/{name}

@@ -14,7 +14,7 @@ test.after.always((t) => {
 	t.context.server.close();
 });
 
-// Checks for extensive user id testing and correct category names have already been implemented in other files
+// Extensive user id testing and correct category names testing have already been implemented in other files
 
 /**
 * Various tests for path PUT /users/{userId}/categories/{categoryName}/garments/{name}
