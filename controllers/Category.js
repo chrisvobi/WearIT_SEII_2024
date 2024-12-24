@@ -3,7 +3,7 @@
 var utils = require('../utils/writer.js');
 var Category = require('../service/CategoryService');
 
-module.exports.getCategories = function getCategories (req, res, next, userId) {
+module.exports.getCategories = function getCategories (_req, res, _next, userId) {
     Category.getCategories(userId)
       .then(function (response) {
         utils.writeJson(res, response.body, response.statusCode);
@@ -13,7 +13,7 @@ module.exports.getCategories = function getCategories (req, res, next, userId) {
       });
   };
 
-  module.exports.getCategoryGarments = function getCategoryGarments (req, res, next, userId, categoryName) {
+  module.exports.getCategoryGarments = function getCategoryGarments (_req, res, _next, userId, categoryName) {
     Category.getCategoryGarments(userId, categoryName)
       .then(function (response) {
         utils.writeJson(res, response.body, response.statusCode);
@@ -23,7 +23,7 @@ module.exports.getCategories = function getCategories (req, res, next, userId) {
       });
   };
 
-  module.exports.addGarment = function addGarment (req, res, next, body, userId, categoryName) {
+  module.exports.addGarment = function addGarment (_req, res, _next, body, userId, categoryName) {
     Category.addGarment(body, userId, categoryName)
       .then(function (response) {
         utils.writeJson(res, response.body, response.statusCode);

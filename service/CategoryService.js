@@ -34,7 +34,7 @@ exports.getCategories = function(userId) {
  * returns List
  **/
 exports.getCategoryGarments = function(userId,categoryName) {
-    return new Promise(function(resolve, reject) {
+    return new Promise(function(resolve) {
       var examples = {};
       examples['application/json'] = { 
         "45" : { "Tops": [
