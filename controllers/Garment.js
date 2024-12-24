@@ -3,7 +3,7 @@
 var utils = require('../utils/writer.js');
 var Garment = require('../service/GarmentService');
 
-module.exports.getGarment = function getGarment (_req, res, _next, userId, categoryName, name) {
+module.exports.getGarment = function getGarment (_, res, _next, userId, categoryName, name) {
     Garment.getGarment(userId, categoryName, name)
       .then(function (response) {
         utils.writeJson(res, response.body, response.statusCode);
@@ -13,7 +13,7 @@ module.exports.getGarment = function getGarment (_req, res, _next, userId, categ
       });
   };
 
-  module.exports.editGarment = function editGarment (_req, res, _next, body, userId, categoryName, name) {
+  module.exports.editGarment = function editGarment (_, res, _next, body, userId, categoryName, name) {
     Garment.editGarment(body, userId, categoryName, name)
       .then(function (response) {
         utils.writeJson(res, response.body, response.statusCode);
@@ -23,7 +23,7 @@ module.exports.getGarment = function getGarment (_req, res, _next, userId, categ
       });
   };
 
-  module.exports.deleteGarment = function deleteGarment (_req, res, _next, userId, categoryName, name) {
+  module.exports.deleteGarment = function deleteGarment (_, res, _next, userId, categoryName, name) {
     Garment.deleteGarment(userId, categoryName, name)
       .then(function (response) {
         utils.writeJson(res, response);
