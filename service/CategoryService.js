@@ -1,6 +1,6 @@
 'use strict';
 
-
+var getExamples = require('../utils/examples');
 /**
  * Get all categories for a user
  * FR1 - The user must be able to manage their virtual wardrobe. Displays the categories to the user 
@@ -35,35 +35,7 @@ exports.getCategories = function(userId) {
  **/
 exports.getCategoryGarments = function(userId,categoryName) {
     return new Promise(function(resolve) {
-      var examples = {};
-      examples['application/json'] = { 
-        "45" : { "Tops": [
-          {
-            "size": "M",
-            "imagePath": "../images/45/Black_Hoodie.jpeg",
-            "name": "Black Hoodie",
-            "brand": "Nike"
-          },{
-            "size" : "M",
-            "imagePath" : "../images/45/Grey_Crewneck.jpeg",
-            "name" : "Grey Crewneck",
-            "brand" : "Zara"
-          }
-        ]},
-        "57": { "Shoes": [
-          {
-            "size" : "41",
-            "imagePath" : "../images/57/White_Shoes.jpeg",
-            "name" : "White Shoes",
-            "brand" : "Converse"
-          },{
-            "size" : "40",
-            "imagePath" : "../images/57/White_Airforce_Shoes.jpeg",
-            "name" : "White Airforce Shoes",
-            "brand" : "Nike"
-          }
-        ]}
-      };
+      var examples = getExamples();
       if (Object.keys(examples).length > 0) {
         resolve({body: examples[Object.keys(examples)][userId][categoryName]});
       } 
