@@ -80,6 +80,18 @@ test("PUT users/{userId}/calendar/{date}/{eventName} returns 400 eventName not g
   t.is(response.body.message, "not found");
 });
 
+// 404 because userId > 120
+test("PUT users/{userId}/calendar/{date}/{eventName} returns 404 user doesn't exist", async (t) => {
+  const userId = generateRandomID(1, 120) + 120;
+  const date = "12-01"; // date given in string format MM-DD
+  const eventName = "Morning Walk";
+  const response = await t.context.got.put(`users/${userId}/calendar/${date}/${eventName}`, { throwHttpErrors: false,
+    json: correctEvent
+   });
+  t.is(response.statusCode, 404);
+  t.is(response.body, "User doesn't exist");
+});
+
 // 400 bad request userId not integer
 test("PUT users/{userId}/calendar/{date}/{eventName} returns 400 because userId is not integer", async (t) => {
   const userId = "asd";

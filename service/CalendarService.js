@@ -230,7 +230,13 @@ exports.updateUserCalendarEvent = function(body,userId,date,eventName) {
     "name" : "CoffeeDate"
   } ],
 }];
-    if (Object.keys(examples).length > 0) { // check that events exist
+    if (userId > 120) {
+      reject({
+        statusCode: 404,
+        body: "User doesn't exist"
+      });
+    }
+    else if (Object.keys(examples).length > 0) { // check that events exist
       const events = examples[Object.keys(examples)];
       const eventIndex = events.findIndex(event => event.title === eventName); // find event that matches the eventName
       if (eventIndex !== -1) { // eventName exists
