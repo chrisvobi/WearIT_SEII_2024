@@ -2,7 +2,6 @@ import http from "node:http";
 import test from "ava";
 import got from "got";
 import app from "../index.js";
-
 // Run server before every test
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
@@ -10,12 +9,10 @@ test.before(async (t) => {
     const { port } = server.address();
 	t.context.got = got.extend({ responseType: "json", prefixUrl: `http://localhost:${port}` });
 });
-
 // Close server fater every test
 test.after.always((t) => {
 	t.context.server.close();
 });
-
 // Only simple userid and category checks here, they have been implemented more extensivly in get_categories.test.mjs
 
 /**
