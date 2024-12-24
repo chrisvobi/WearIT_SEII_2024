@@ -1,4 +1,10 @@
-// Dummy database with garments in categories of users
+/**
+* Dummy Database
+*
+* Has 2 users
+* Each user has 1 category
+* Each category haw 2 garments
+ **/
 
 module.exports = () => ({
     'application/json': {

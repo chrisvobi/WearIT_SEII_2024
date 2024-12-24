@@ -3,7 +3,7 @@ import test from "ava";
 import got from "got";
 import app from "../index.js";
 
-
+// Run server before every test
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
     const server = t.context.server.listen();
@@ -11,11 +11,21 @@ test.before(async (t) => {
 	t.context.got = got.extend({ responseType: "json", prefixUrl: `http://localhost:${port}` });
 });
 
+// Close server fater every test
 test.after.always((t) => {
 	t.context.server.close();
 });
 
 // Checks for extensive user id testing and correct category names have already been implemented in other files
+
+/**
+* Various tests for path PUT /users/{userId}/categories/{categoryName}/garments/{name}
+*
+* userId = the id of the user
+* category = the category in which the garment to be edited is
+* name = the name of the garment to be edited
+* garment = the new data of the garment to be edited
+ **/
 
 // Response 200, it worked, successfully edited garment in a category
 test("PUT /users/{userId}/categories/{categoryName}/garments/{name} with a correct data, change size", async (t) => {

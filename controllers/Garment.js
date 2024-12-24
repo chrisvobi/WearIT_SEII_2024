@@ -3,6 +3,9 @@
 var utils = require('../utils/writer.js');
 var Garment = require('../service/GarmentService');
 
+// Controller for the Garment 
+// Handles all functions related to garments
+
 module.exports.getGarment = function getGarment (_, res, _next, userId, categoryName, name) {
     Garment.getGarment(userId, categoryName, name)
       .then(function (response) {

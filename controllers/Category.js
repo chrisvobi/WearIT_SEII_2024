@@ -3,6 +3,9 @@
 var utils = require('../utils/writer.js');
 var Category = require('../service/CategoryService');
 
+// Controller for the Category 
+// Handles all functions related to categories
+
 module.exports.getCategories = function getCategories (_, res, _next, userId) {
     Category.getCategories(userId)
       .then(function (response) {

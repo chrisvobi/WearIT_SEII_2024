@@ -3,7 +3,7 @@ import test from "ava";
 import got from "got";
 import app from "../index.js";
 
-
+// Run server before every test
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
     const server = t.context.server.listen();
@@ -11,11 +11,20 @@ test.before(async (t) => {
 	t.context.got = got.extend({ responseType: "json", prefixUrl: `http://localhost:${port}` });
 });
 
+// Close server fater every test
 test.after.always((t) => {
 	t.context.server.close();
 });
 
 // Only simple userid and category checks here, they have been implemented more extensivly in get_categories.test.mjs
+
+/**
+* Various tests for path GET /users/{userId}/categories/{categoryName}/garments/{name}
+*
+* userId = the id of the user
+* category = the category of the garment
+* name = the name of the garment
+ **/
 
 // Response 200, it worked, user 45 gets Black Hoodie from Tops category
 test("GET /users/{userId}/categories/{categoryName}/garments/{name} returns correct response and status for user 45", async (t) => {
