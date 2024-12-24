@@ -10,6 +10,7 @@ module.exports.getGarment = function getGarment (_, res, _next, userId, category
       })
       .catch(function (response) {
         utils.writeJson(res, response.body, response.statusCode);
+        _next();
       });
   };
 
@@ -20,6 +21,7 @@ module.exports.getGarment = function getGarment (_, res, _next, userId, category
       })
       .catch(function (response) {
         utils.writeJson(res, response.body, response.statusCode);
+        _next();
       });
   };
 
@@ -30,5 +32,6 @@ module.exports.getGarment = function getGarment (_, res, _next, userId, category
       })
       .catch(function (response) {
         utils.writeJson(res, response.body, response.statusCode);
+        _next();
       });
   };
