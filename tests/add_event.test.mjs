@@ -15,12 +15,6 @@ test.after.always((t) => {
 	t.context.server.close();
 });
 
-/*
-Event has date:integer, day:string ,month:integer, title:string ,Outfit
-Outfit has name:string, and an array of Garment
-Garment has name:string, size:string, brand:string, imagePath:string
-*/
-
 // Say app has ~100 users so any ID above 120 doesn't exist
 
 import {correctEvent, falseEvent, falseEvent2} from "../utils/events.js";
