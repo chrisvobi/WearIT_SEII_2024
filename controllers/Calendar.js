@@ -1,7 +1,7 @@
 'use strict';
 
-var utils = require('../utils/writer.js');
-var Calendar = require('../service/CalendarService');
+var utils = require('../utils/writer.js'); // Utility for sending JSON responses
+var Calendar = require('../service/CalendarService'); // Service to handle calendar-related actions
 
 // GET users/{userId}/calendar
 module.exports.getUserCalendar = function getUserCalendar (_, res, _next, userId) {
