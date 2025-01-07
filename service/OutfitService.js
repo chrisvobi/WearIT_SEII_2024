@@ -48,12 +48,16 @@ exports.getOutfit = function (userId, name) {
 };
 
 // PUT users/{userId}/outfits/{name}
-exports.updateOutfit = function (body,name) {
+exports.updateOutfit = function (body,userId,name) {
   return new Promise(function (resolve, reject) {
     const examples = { 'application/json': validOutfit };
-    
-
-    if (Object.keys(examples).length > 0) {
+    if (userId > 120) {
+      reject({
+        statusCode: 404,
+        body: "User doesn't exist"
+      });
+    }
+    else if (Object.keys(examples).length > 0) {
       const outfits = examples['application/json'];
       const index = outfits.findIndex(outfit => outfit.name === name);
 
