@@ -1,6 +1,6 @@
 'use strict';
 
-const { validOutfit, invalidOutfit } = require('../utils/outfits');
+const { validOutfit } = require('../utils/outfits');
 
 // Shared outfit examples
 const sharedOutfits = [
