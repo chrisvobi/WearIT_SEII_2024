@@ -1,5 +1,7 @@
 'use strict';
 
+const { validOutfit, invalidOutfit } = require('../utils/outfits');
+
 // POST /users/{userId}/outfit
 // Function to create an outfit for a specific user
 exports.createOutfit = function(body,userId) {
@@ -26,23 +28,7 @@ exports.getOutfit = function(userId,name) {
     examples['application/json'] = [
        // Mock data: Predefined outfits
        {
-      "garments" : [ {
-        "size" : "M",
-        "imagePath" : "../images/CameraRoll/PIC01_12_01_2024.jpeg",
-        "name" : "BlackHoodie",
-        "brand" : "Nike"
-      }, {
-        "size" : "M",
-        "imagePath" : "../images/CameraRoll/PIC02_12_01_2024.jpeg",
-        "name" : "GreySweatpants",
-        "brand" : "Nike"
-      }, {
-        "size" : "M",
-        "imagePath" : "../images/CameraRoll/PIC03_12_01_2024.jpeg",
-        "name" : "WhiteShoes",
-        "brand" : "Converse"
-      } ],
-      "name" : "EverydayOutfit"
+        validOutfit
   },
   { // Another outfit example
     "garments" : [ {
