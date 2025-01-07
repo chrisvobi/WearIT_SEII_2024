@@ -74,10 +74,16 @@ exports.getOutfit = function (userId, name) {
 };
 
 // PUT users/{userId}/outfits/{name}
-exports.updateOutfit = function (body, _userId, name) {
+exports.updateOutfit = function (body, userId, name) {
   return new Promise(function (resolve, reject) {
     const examples = { 'application/json': sharedOutfits };
-if (Object.keys(examples).length > 0) {
+
+    if (userId > 120) {
+      reject({
+        statusCode: 404, // User doesn't exist error code
+        body: "User doesn't exist"
+      });
+    } else if (Object.keys(examples).length > 0) {
       const outfits = examples['application/json'];
       const index = outfits.findIndex(outfit => outfit.name === name);
 
@@ -86,13 +92,14 @@ if (Object.keys(examples).length > 0) {
         resolve({ body: examples['application/json'][index] });
       } else {
         reject({
-          statusCode: 404,//error code
+          statusCode: 404, // error code
           body: "Outfit with this name doesn't exist"
         });
       }
     }
   });
 };
+
 
 // DELETE users/{userId}/outfits/{name}
 exports.deleteOutfit = function (userId, name) {
