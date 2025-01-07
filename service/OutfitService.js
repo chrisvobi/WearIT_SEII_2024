@@ -1,95 +1,129 @@
-'use strict';
+const outfits = require('../utils/outfits');  // Mock data
+const { validOutfit, invalidOutfit } = outfits;
 
-// Import outfits from the utils file
-const { validOutfit, invalidOutfit } = require('../utils/outfits.js');
-
-// POST /users/{userId}/outfit
-// Function to create an outfit for a specific user
-exports.createOutfit = function(body, userId) {
+// Create Outfit - POST /users/{userId}/outfits
+exports.addOutfit = function(userId, outfit) {
   return new Promise(function(resolve, reject) {
-    if (userId > 120) { // Check if the user ID is valid (mock logic)
+    if (!userId || isNaN(userId) || userId <= 0) {
       reject({
-        statusCode: 404,
-        body: "User doesn't exist"
+        statusCode: 400,
+        body: "userId must be a valid positive integer"
+      });
+    } else if (!outfit || !outfit.name || !outfit.description) {
+      reject({
+        statusCode: 400,
+        body: "Outfit missing required properties"
       });
     } else {
-      resolve(body); // Return the body of the outfit as it is
-    }
-  });
-}
-
-// GET /users/{userId}/outfits/{name}
-exports.getOutfit = function(userId, name) {
-  return new Promise(function(resolve, reject) {
-    if (userId > 120) { // User validation
-      reject({
-        statusCode: 404,
-        body: "User doesn't exist"
+      resolve({
+        statusCode: 201,
+        body: outfit
       });
-    } else {
-      // Use the imported outfits from the utils
-      const outfits = [validOutfit, invalidOutfit];
-      const index = outfits.findIndex(outfit => outfit.name === name); // Find the outfit by name
-      if (index !== -1) { // Outfit with given name exists
-        resolve({ body: outfits[index] });
-      } else { // Outfit doesn't exist
-        reject({
-          statusCode: 404,
-          body: "Outfit with this name doesn't exist"
-        });
-      }
     }
   });
-}
+};
 
-// PUT /users/{userId}/outfits/{name}
-// Function to update an existing outfit for a user
-exports.updateOutfit = function(body, userId, name) {
-  return new Promise(function(resolve, reject) {
-    if (userId > 120) { // User validation
-      reject({
-        statusCode: 404,
-        body: "User doesn't exist"
-      });
-    } else {
-      // Use the imported outfits from the utils
-      const outfits = [validOutfit, invalidOutfit];
-      const index = outfits.findIndex(outfit => outfit.name === name); // Find the outfit by name
-      if (index !== -1) { // Outfit with given name exists
-        outfits[index] = body; // Update the outfit
-        resolve({ body: outfits[index] });
-      } else { // Outfit doesn't exist
-        reject({
-          statusCode: 404,
-          body: "Outfit with this name doesn't exist"
-        });
-      }
-    }
-  });
-}
-
-// DELETE /users/{userId}/outfits/{name}
-// Function to delete a specific outfit
+// Delete Outfit - DELETE /users/{userId}/outfits/{name}
 exports.deleteOutfit = function(userId, name) {
   return new Promise(function(resolve, reject) {
-    if (userId > 120) { // User validation
+    if (!userId || isNaN(userId) || userId <= 0) {
+      reject({
+        statusCode: 400,
+        body: "userId must be a valid positive integer"
+      });
+    }
+
+    if (!name) {
+      reject({
+        statusCode: 405,
+        body: "Outfit name not given"
+      });
+    }
+
+    const index = outfits.findIndex(outfit => outfit.name === name);
+    if (index === -1) {
       reject({
         statusCode: 404,
-        body: "User doesn't exist"
+        body: "Outfit with this name doesn't exist"
       });
     } else {
-      // Use the imported outfits from the utils
-      let outfits = [validOutfit, invalidOutfit];
-      const index = outfits.findIndex(outfit => outfit.name === name); // Find the outfit by name
-      if (index !== -1) { // Outfit with given name exists
-        outfits.splice(index, 1); // Remove the outfit
-        resolve({ body: "Outfit deleted successfully" });
-      } else { // Outfit doesn't exist
-        reject({
-          statusCode: 404,
-          body: "Outfit with this name doesn't exist"
-        });
-      }
+      outfits.splice(index, 1);  // Delete outfit from array
+      resolve({
+        statusCode: 200,
+        body: "Outfit deleted successfully"
+      });
     }
   });
-}
+};
+
+// Edit Outfit - PUT /users/{userId}/outfits/{name}
+exports.editOutfit = function(userId, name, updatedOutfit) {
+  return new Promise(function(resolve, reject) {
+    if (!userId || isNaN(userId) || userId <= 0) {
+      reject({
+        statusCode: 400,
+        body: "userId must be a valid positive integer"
+      });
+    }
+
+    if (!name) {
+      reject({
+        statusCode: 405,
+        body: "Outfit name not given"
+      });
+    }
+
+    if (!updatedOutfit || !updatedOutfit.name || !updatedOutfit.description) {
+      reject({
+        statusCode: 400,
+        body: "Outfit missing required properties"
+      });
+    }
+
+    const index = outfits.findIndex(outfit => outfit.name === name);
+    if (index === -1) {
+      reject({
+        statusCode: 404,
+        body: "Outfit with this name doesn't exist"
+      });
+    } else {
+      outfits[index] = { ...outfits[index], ...updatedOutfit };  // Update the outfit
+      resolve({
+        statusCode: 200,
+        body: outfits[index]
+      });
+    }
+  });
+};
+
+// Get Outfit - GET /users/{userId}/outfits/{name}
+exports.getOutfit = function(userId, name) {
+  return new Promise(function(resolve, reject) {
+    if (!userId || isNaN(userId) || userId <= 0) {
+      reject({
+        statusCode: 400,
+        body: "userId must be a valid positive integer"
+      });
+    }
+
+    if (!name) {
+      reject({
+        statusCode: 405,
+        body: "Outfit name not given"
+      });
+    }
+
+    const index = outfits.findIndex(outfit => outfit.name === name);
+    if (index === -1) {
+      reject({
+        statusCode: 404,
+        body: "Outfit with this name doesn't exist"
+      });
+    } else {
+      resolve({
+        statusCode: 200,
+        body: outfits[index]
+      });
+    }
+  });
+};
