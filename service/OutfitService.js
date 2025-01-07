@@ -21,7 +21,7 @@ exports.createOutfit = function(body,userId) {
 
 // GET users/{userId}/outfits/{name}
 exports.getOutfit = function(userId,name) {
-  return new Promise(function(resolve, reject) {
+  return new Promise(function(resolve) {
     var examples = {};
     examples['application/json'] = [
        // Mock data: Predefined outfits
