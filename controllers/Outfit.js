@@ -1,13 +1,14 @@
 'use strict';
 
-var utils = require('../utils/writer.js');
+// Importing required modules
+var utils = require('../utils/writer.js'); 
 var Outfit = require('../service/OutfitService');
 
 // POST users/{userId}/outfit
 module.exports.createOutfit = function createOutfit(_, res,_next, body, userId) {
-  Outfit.createOutfit(body, userId)
+  Outfit.createOutfit(body, userId)// Call the service function to create an outfit
     .then(function (response) {
-      utils.writeJson(res, response, 201);
+      utils.writeJson(res, response, 201);// If the creation is successful, respond with status code 201 (Created)
     })
     .catch(function (response) {
       utils.writeJson(res, response.body, response.statusCode);
