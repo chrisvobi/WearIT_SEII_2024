@@ -3,7 +3,6 @@ import test from "ava";
 import got from "got";
 import app from "../index.js";
 
-
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
     const server = t.context.server.listen();
@@ -15,7 +14,15 @@ test.after.always((t) => {
 	t.context.server.close();
 });
 
-// Checks for extensive user id testing and correct category names have already been implemented in other files
+// User id testing and correct category names have already been tested in other files
+
+/**
+* Various tests for path DELETE /users/{userId}/categories/{categoryName}/garments/{name}
+*
+* userId = the id of the user
+* category = the category of the garment
+* name = the name of the garment to be deleted
+ **/
 
 // Response 200, it worked, successfully deleted garment in a category
 test("DELETE /users/{userId}/categories/{categoryName}/garments/{name} successfully deletes a garment", async (t) => {

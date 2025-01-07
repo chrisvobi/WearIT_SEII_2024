@@ -1,6 +1,6 @@
 'use strict';
 
-
+var getExamples = require('../utils/examples');
 /**
  * Get a specific garment in a specific category for a user
  * FR4 - The user must be able to manage their virtual wardrobe. Retrieve a specific garment in a specific category for a user. 
@@ -12,35 +12,7 @@
  **/
 exports.getGarment = function(userId,categoryName,name) {
     return new Promise(function(resolve, reject) {
-      var examples = {};
-      examples['application/json'] = { 
-        "45" : { "Tops": [
-          {
-            "size": "M",
-            "imagePath": "../images/45/Black_Hoodie.jpeg",
-            "name": "Black Hoodie",
-            "brand": "Nike"
-          },{
-            "size" : "M",
-            "imagePath" : "../images/45/Grey_Crewneck.jpeg",
-            "name" : "Grey Crewneck",
-            "brand" : "Zara"
-          }
-        ]},
-        "57": { "Shoes": [
-          {
-            "size" : "41",
-            "imagePath" : "../images/57/White_Shoes.jpeg",
-            "name" : "White Shoes",
-            "brand" : "Converse"
-          },{
-            "size" : "40",
-            "imagePath" : "../images/57/White_Airforce_Shoes.jpeg",
-            "name" : "White Airforce Shoes",
-            "brand" : "Nike"
-          }
-        ]}
-      };
+      var examples = getExamples();
       if (userId > 100) {
         reject({
             body: "User doesn't exist",
@@ -73,35 +45,7 @@ exports.getGarment = function(userId,categoryName,name) {
  **/
 exports.editGarment = function(body,userId,categoryName,name) {
     return new Promise(function(resolve, reject) {
-      var examples = {};
-      examples['application/json'] = { 
-        "45" : { "Tops": [
-          {
-            "size": "M",
-            "imagePath": "../images/45/Black_Hoodie.jpeg",
-            "name": "Black Hoodie",
-            "brand": "Nike"
-          },{
-            "size" : "M",
-            "imagePath" : "../images/45/Grey_Crewneck.jpeg",
-            "name" : "Grey Crewneck",
-            "brand" : "Zara"
-          }
-        ]},
-        "57": { "Shoes": [
-          {
-            "size" : "41",
-            "imagePath" : "../images/57/White_Shoes.jpeg",
-            "name" : "White Shoes",
-            "brand" : "Converse"
-          },{
-            "size" : "40",
-            "imagePath" : "../images/57/White_Airforce_Shoes.jpeg",
-            "name" : "White Airforce Shoes",
-            "brand" : "Nike"
-          }
-        ]}
-      };
+      var examples = getExamples();
       // check if edit of garment already exists
       const garments = examples[Object.keys(examples)][userId][categoryName];
       var garmentIndex = garments.findIndex(garment => (garment.size == body.size && garment.imagePath == body.imagePath && garment.name == body.name && garment.brand == body.brand));
@@ -139,35 +83,7 @@ exports.editGarment = function(body,userId,categoryName,name) {
  **/
 exports.deleteGarment = function(userId,categoryName,name) {
     return new Promise(function(resolve, reject) {
-      var examples = {};
-      examples['application/json'] = { 
-        "45" : { "Tops": [
-          {
-            "size": "M",
-            "imagePath": "../images/45/Black_Hoodie.jpeg",
-            "name": "Black Hoodie",
-            "brand": "Nike"
-          },{
-            "size" : "M",
-            "imagePath" : "../images/45/Grey_Crewneck.jpeg",
-            "name" : "Grey Crewneck",
-            "brand" : "Zara"
-          }
-        ]},
-        "57": { "Shoes": [
-          {
-            "size" : "41",
-            "imagePath" : "../images/57/White_Shoes.jpeg",
-            "name" : "White Shoes",
-            "brand" : "Converse"
-          },{
-            "size" : "40",
-            "imagePath" : "../images/57/White_Airforce_Shoes.jpeg",
-            "name" : "White Airforce Shoes",
-            "brand" : "Nike"
-          }
-        ]}
-      };
+      var examples = getExamples();
       // check if name of garment to be deleted exists
       var garments = examples[Object.keys(examples)][userId][categoryName];
       var garmentIndex = garments.findIndex(garment => garment.name === name);
