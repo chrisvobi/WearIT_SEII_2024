@@ -54,7 +54,7 @@ exports.getOutfit = function (userId, name) {
 
     if (userId > 120) {
       reject({
-        statusCode: 404,
+        statusCode: 404,//User doesn't exist error code
         body: "User doesn't exist"
       });
     } else {
@@ -101,7 +101,7 @@ exports.deleteOutfit = function (userId, name) {
 
     if (userId > 120) {
       reject({
-        statusCode: 404,
+        statusCode: 404,//User doesn't exist error code
         body: "User doesn't exist"
       });
     } else if (Object.keys(examples).length > 0) {
