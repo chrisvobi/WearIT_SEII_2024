@@ -88,7 +88,7 @@ exports.getOutfit = function(userId,name) {
 
 // PUT users/{userId}/outfits/{name}
 // Function to update an existing outfit for a user
-exports.updateOutfit = function(body,userId,name) {
+exports.updateOutfit = function(body,_userId,name) {
   return new Promise(function(resolve,reject) {
     var examples = {};
     examples['application/json'] = [{
