@@ -1,8 +1,9 @@
-const validOutfit = { // dummy outfit to add
-    "garments" : [ {
+// A valid dummy outfit object used for testing purposes
+const validOutfit = {
+    "garments" : [ { // First garment in the outfit
       "size" : "M",
-      "imagePath" : "../images/CameraRoll/PIC01_12_01_2024.jpeg",
-      "name" : "BlackHoodie",
+      "imagePath" : "../images/CameraRoll/PIC01_12_01_2024.jpeg", // Relative path to garment image
+      "name" : "BlackHoodie",// Name of the garment
       "brand" : "Nike"
     }, {
       "size" : "M",
@@ -18,7 +19,7 @@ const validOutfit = { // dummy outfit to add
     "name" : "EverydayOutfit"
 };
 
-const invalidOutfit = { // missing name property
+const invalidOutfit = {  // Missing the "name" property to simulate an invalid outfit
   "garments" : [ {
     "size" : "M",
     "imagePath" : "../images/CameraRoll/PIC01_12_01_2024.jpeg",
@@ -36,5 +37,5 @@ const invalidOutfit = { // missing name property
     "brand" : "Converse"
   } ]
 };
-
+// Exporting the objects for use in other files (e.g., tests)
 module.exports = {validOutfit, invalidOutfit};
