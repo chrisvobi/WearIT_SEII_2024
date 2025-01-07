@@ -1,6 +1,7 @@
+// Generate a random integer between min (inclusive) and max (exclusive)
 var ResponsePayload = function(code, payload) {
-  this.code = code;
-  this.payload = payload;
+  this.code = code;        // HTTP response code (e.g., 200, 404)
+  this.payload = payload; // The data to be returned in the response
 }
 
 exports.respondWithCode = function(code, payload) {
