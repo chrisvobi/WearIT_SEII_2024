@@ -48,8 +48,6 @@ var writeJson = exports.writeJson = function(response, arg1, arg2) {
   if(typeof payload === 'object') {
     payload = JSON.stringify(payload, null, 2); // Convert object to a formatted JSON string
   }
-
-  // Set the response HTTP headers and send the JSON payload
-  response.writeHead(code, {'Content-Type': 'application/json'}); // Set the Content-Type to JSON
-  response.end(payload); // End the response and send the payload
+  response.writeHead(code, {'Content-Type': 'application/json'});
+  response.end(payload);
 }
