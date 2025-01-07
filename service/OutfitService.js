@@ -81,7 +81,7 @@ exports.getOutfit = function(userId,name) {
           statusCode: 404,
           body: "Outfit with this name doesn't exist"
         })
-      };
+      }
     }
   });
 }
@@ -141,7 +141,7 @@ exports.updateOutfit = function(body,userId,name) {
           statusCode: 404,
           body: "Outfit with this name doesn't exist"
         })
-      };
+      }
     }
   });
 }
@@ -211,7 +211,7 @@ exports.deleteOutfit = function(userId,name) {
         statusCode: 404,
         body: "Outfit with this name doesn't exist"
       })
-    };
+    }
   }
   });
 }
