@@ -1,34 +1,7 @@
 'use strict';
 
-const { validOutfit } = require('../utils/outfits');
+const { sharedOutfits } = require('../utils/outfits');
 
-// Shared outfit examples
-const sharedOutfits = [
-  validOutfit, // Reference the valid outfit
-  {
-    "garments": [
-      {
-        "size": "M",
-        "imagePath": "../images/CameraRoll/PIC04_12_01_2024.jpeg",
-        "name": "GreyCrewneck",
-        "brand": "Zara"
-      },
-      {
-        "size": "M",
-        "imagePath": "../images/CameraRoll/PIC05_12_01_2024.jpeg",
-        "name": "BlackFormalPants",
-        "brand": "H&M"
-      },
-      {
-        "size": "M",
-        "imagePath": "../images/CameraRoll/PIC06_12_01_2024.jpeg",
-        "name": "WhiteAirforceShoes",
-        "brand": "Nike"
-      }
-    ],
-    "name": "CoffeeDate"
-  }
-];
 
 // POST /users/{userId}/outfit
 exports.createOutfit = function (body, userId) {
