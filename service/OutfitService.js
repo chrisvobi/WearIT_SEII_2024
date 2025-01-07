@@ -1,6 +1,7 @@
 'use strict';
 
 // POST /users/{userId}/outfit
+// Function to create an outfit for a specific user
 exports.createOutfit = function(body,userId) {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -22,7 +23,9 @@ exports.createOutfit = function(body,userId) {
 exports.getOutfit = function(userId,name) {
   return new Promise(function(resolve, reject) {
     var examples = {};
-    examples['application/json'] = [{
+    examples['application/json'] = [
+       // Mock data: Predefined outfits
+       {
       "garments" : [ {
         "size" : "M",
         "imagePath" : "../images/CameraRoll/PIC01_12_01_2024.jpeg",
@@ -60,7 +63,8 @@ exports.getOutfit = function(userId,name) {
     } ],
     "name" : "CoffeeDate"
   }];
-    if (userId > 120) {
+    if (userId > 120)// User validation
+     {
       reject({
         statusCode: 404,
         body: "User doesn't exist"
@@ -68,7 +72,7 @@ exports.getOutfit = function(userId,name) {
     }
     else if (Object.keys(examples).length > 0) {
       const outfits = examples[Object.keys(examples)];
-      const index = outfits.findIndex(outfit => outfit.name === name);
+      const index = outfits.findIndex(outfit => outfit.name === name);// Find the outfit by name
       if (index !== -1) { // outfit with given name exists
         resolve({body: outfits[index]});
       }
@@ -83,6 +87,7 @@ exports.getOutfit = function(userId,name) {
 }
 
 // PUT users/{userId}/outfits/{name}
+// Function to update an existing outfit for a user
 exports.updateOutfit = function(body,userId,name) {
   return new Promise(function(resolve, reject) {
     var examples = {};
@@ -105,7 +110,7 @@ exports.updateOutfit = function(body,userId,name) {
       } ],
       "name" : "EverydayOutfit"
   },
-  {
+  {  // Another outfit example
     "garments" : [ {
       "size" : "M",
       "imagePath" : "../images/CameraRoll/PIC04_12_01_2024.jpeg",
@@ -142,6 +147,7 @@ exports.updateOutfit = function(body,userId,name) {
 }
 
 // DELETE users/{userId}/outfits/{name}
+// Function to delete a specific outfit
 exports.deleteOutfit = function(userId,name) {
   return new Promise(function(resolve, reject) {
     var examples = {};
