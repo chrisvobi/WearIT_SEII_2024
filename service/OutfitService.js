@@ -1,129 +1,217 @@
-const outfits = require('../utils/outfits');  // Mock data
-const { validOutfit, invalidOutfit } = outfits;
+'use strict';
 
-// Create Outfit - POST /users/{userId}/outfits
-exports.addOutfit = function(userId, outfit) {
+// POST /users/{userId}/outfit
+// Function to create an outfit for a specific user
+exports.createOutfit = function(body,userId) {
   return new Promise(function(resolve, reject) {
-    if (!userId || isNaN(userId) || userId <= 0) {
+    var examples = {};
+    examples['application/json'] = [];
+    examples['application/json'].push(body);
+    if (userId>120) {// Check if the user ID is valid (mock logic)
       reject({
-        statusCode: 400,
-        body: "userId must be a valid positive integer"
-      });
-    } else if (!outfit || !outfit.name || !outfit.description) {
-      reject({
-        statusCode: 400,
-        body: "Outfit missing required properties"
-      });
-    } else {
-      resolve({
-        statusCode: 201,
-        body: outfit
-      });
+        statusCode: 404,
+        body: "User doesn't exist"
+      })
+    }
+    else if (Object.keys(examples).length > 0) {
+      resolve(examples[Object.keys(examples)][0]);// Return the first outfit in the examples
     }
   });
-};
+}
 
-// Delete Outfit - DELETE /users/{userId}/outfits/{name}
-exports.deleteOutfit = function(userId, name) {
+// GET users/{userId}/outfits/{name}
+exports.getOutfit = function(userId,name) {
+  return new Promise(function(resolve,reject) {
+    var examples = {};
+    examples['application/json'] = [
+       // Mock data: Predefined outfits
+       {
+      "garments" : [ {
+        "size" : "M",
+        "imagePath" : "../images/CameraRoll/PIC01_12_01_2024.jpeg",
+        "name" : "BlackHoodie",
+        "brand" : "Nike"
+      }, {
+        "size" : "M",
+        "imagePath" : "../images/CameraRoll/PIC02_12_01_2024.jpeg",
+        "name" : "GreySweatpants",
+        "brand" : "Nike"
+      }, {
+        "size" : "M",
+        "imagePath" : "../images/CameraRoll/PIC03_12_01_2024.jpeg",
+        "name" : "WhiteShoes",
+        "brand" : "Converse"
+      } ],
+      "name" : "EverydayOutfit"
+  },
+  { // Another outfit example
+    "garments" : [ {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC04_12_01_2024.jpeg",
+      "name" : "GreyCrewneck",
+      "brand" : "Zara"
+    }, {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC05_12_01_2024.jpeg",
+      "name" : "BlackFormalPants",
+      "brand" : "H&M"
+    }, {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC06_12_01_2024.jpeg",
+      "name" : "WhiteAirforceShoes",
+      "brand" : "Nike"
+    } ],
+    "name" : "CoffeeDate"
+  }];
+    if (userId > 120)// User validation
+     {
+      reject({
+        statusCode: 404,
+        body: "User doesn't exist"
+      })
+    }
+    else if (Object.keys(examples).length > 0) {
+      const outfits = examples[Object.keys(examples)];
+      const index = outfits.findIndex(outfit => outfit.name === name);// Find the outfit by name
+      if (index !== -1) { // outfit with given name exists
+        resolve({body: outfits[index]});
+      }
+      else { // outfit doesn't exist
+        reject({
+          statusCode: 404,
+          body: "Outfit with this name doesn't exist"
+        })
+      }
+    }
+  });
+}
+
+// PUT users/{userId}/outfits/{name}
+// Function to update an existing outfit for a user
+exports.updateOutfit = function(body,userId,name) {
+  return new Promise(function(resolve,reject) {
+    var examples = {};
+    examples['application/json'] = [{
+      "garments" : [ {
+        "size" : "M",
+        "imagePath" : "../images/CameraRoll/PIC01_12_01_2024.jpeg",
+        "name" : "BlackHoodie",
+        "brand" : "Nike"
+      }, {
+        "size" : "M",
+        "imagePath" : "../images/CameraRoll/PIC02_12_01_2024.jpeg",
+        "name" : "GreySweatpants",
+        "brand" : "Nike"
+      }, {
+        "size" : "M",
+        "imagePath" : "../images/CameraRoll/PIC03_12_01_2024.jpeg",
+        "name" : "WhiteShoes",
+        "brand" : "Converse"
+      } ],
+      "name" : "EverydayOutfit"
+  },
+  {  // Another outfit example
+    "garments" : [ {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC04_12_01_2024.jpeg",
+      "name" : "GreyCrewneck",
+      "brand" : "Zara"
+    }, {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC05_12_01_2024.jpeg",
+      "name" : "BlackFormalPants",
+      "brand" : "H&M"
+    }, {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC06_12_01_2024.jpeg",
+      "name" : "WhiteAirforceShoes",
+      "brand" : "Nike"
+    } ],
+    "name" : "CoffeeDate"
+  }];
+    if (Object.keys(examples).length > 0) { // check that outfits exist
+      const outfits = examples[Object.keys(examples)];
+      const index = outfits.findIndex(outfit => outfit.name === name);
+      if (index !== -1) { // outfit with given name exists
+        examples[Object.keys(examples)][index] = body
+        resolve({body: examples[Object.keys(examples)][index]});
+      }
+      else { // outfit doesn't exist
+        reject({
+          statusCode: 404,
+          body: "Outfit with this name doesn't exist"
+        })
+      }
+    }
+  });
+}
+
+// DELETE users/{userId}/outfits/{name}
+// Function to delete a specific outfit
+exports.deleteOutfit = function(userId,name) {
   return new Promise(function(resolve, reject) {
-    if (!userId || isNaN(userId) || userId <= 0) {
-      reject({
-        statusCode: 400,
-        body: "userId must be a valid positive integer"
-      });
+    var examples = {};
+    examples['application/json'] = [{
+      "garments" : [ {
+        "size" : "M",
+        "imagePath" : "../images/CameraRoll/PIC01_12_01_2024.jpeg",
+        "name" : "BlackHoodie",
+        "brand" : "Nike"
+      }, {
+        "size" : "M",
+        "imagePath" : "../images/CameraRoll/PIC02_12_01_2024.jpeg",
+        "name" : "GreySweatpants",
+        "brand" : "Nike"
+      }, {
+        "size" : "M",
+        "imagePath" : "../images/CameraRoll/PIC03_12_01_2024.jpeg",
+        "name" : "WhiteShoes",
+        "brand" : "Converse"
+      } ],
+      "name" : "EverydayOutfit"
+  },
+  {
+    "garments" : [ {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC04_12_01_2024.jpeg",
+      "name" : "GreyCrewneck",
+      "brand" : "Zara"
+    }, {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC05_12_01_2024.jpeg",
+      "name" : "BlackFormalPants",
+      "brand" : "H&M"
+    }, {
+      "size" : "M",
+      "imagePath" : "../images/CameraRoll/PIC06_12_01_2024.jpeg",
+      "name" : "WhiteAirforceShoes",
+      "brand" : "Nike"
+    } ],
+    "name" : "CoffeeDate"
+  }];
+  if (userId > 120) {
+    reject({
+      statusCode: 404,
+      body: "User doesn't exist"
+    })
+  }
+  else if (Object.keys(examples).length > 0) { // check that outfits exist
+    var outfits = examples[Object.keys(examples)];
+    var index = outfits.findIndex(outfit => outfit.name === name);
+    if (index !== -1) { // outfit with given name exists
+      examples[Object.keys(examples)].splice(index, 1);
+      outfits = examples[Object.keys(examples)];
+      index = outfits.findIndex(outfit => outfit.name === name);
+      if (index === -1) { // check that outfit was removed
+        resolve({body: "Outfit deleted successfully"});
+      }
     }
-
-    if (!name) {
-      reject({
-        statusCode: 405,
-        body: "Outfit name not given"
-      });
-    }
-
-    const index = outfits.findIndex(outfit => outfit.name === name);
-    if (index === -1) {
+    else { // outfit doesn't exist
       reject({
         statusCode: 404,
         body: "Outfit with this name doesn't exist"
-      });
-    } else {
-      outfits.splice(index, 1);  // Delete outfit from array
-      resolve({
-        statusCode: 200,
-        body: "Outfit deleted successfully"
-      });
+      })
     }
+  }
   });
-};
-
-// Edit Outfit - PUT /users/{userId}/outfits/{name}
-exports.editOutfit = function(userId, name, updatedOutfit) {
-  return new Promise(function(resolve, reject) {
-    if (!userId || isNaN(userId) || userId <= 0) {
-      reject({
-        statusCode: 400,
-        body: "userId must be a valid positive integer"
-      });
-    }
-
-    if (!name) {
-      reject({
-        statusCode: 405,
-        body: "Outfit name not given"
-      });
-    }
-
-    if (!updatedOutfit || !updatedOutfit.name || !updatedOutfit.description) {
-      reject({
-        statusCode: 400,
-        body: "Outfit missing required properties"
-      });
-    }
-
-    const index = outfits.findIndex(outfit => outfit.name === name);
-    if (index === -1) {
-      reject({
-        statusCode: 404,
-        body: "Outfit with this name doesn't exist"
-      });
-    } else {
-      outfits[index] = { ...outfits[index], ...updatedOutfit };  // Update the outfit
-      resolve({
-        statusCode: 200,
-        body: outfits[index]
-      });
-    }
-  });
-};
-
-// Get Outfit - GET /users/{userId}/outfits/{name}
-exports.getOutfit = function(userId, name) {
-  return new Promise(function(resolve, reject) {
-    if (!userId || isNaN(userId) || userId <= 0) {
-      reject({
-        statusCode: 400,
-        body: "userId must be a valid positive integer"
-      });
-    }
-
-    if (!name) {
-      reject({
-        statusCode: 405,
-        body: "Outfit name not given"
-      });
-    }
-
-    const index = outfits.findIndex(outfit => outfit.name === name);
-    if (index === -1) {
-      reject({
-        statusCode: 404,
-        body: "Outfit with this name doesn't exist"
-      });
-    } else {
-      resolve({
-        statusCode: 200,
-        body: outfits[index]
-      });
-    }
-  });
-};
+}
