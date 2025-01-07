@@ -77,12 +77,7 @@ exports.getOutfit = function (userId, name) {
 exports.updateOutfit = function (body, _userId, name) {
   return new Promise(function (resolve, reject) {
     const examples = { 'application/json': sharedOutfits };
-    if (userId > 120) {
-      reject({
-        statusCode: 404,
-        body: "User doesn't exist"
-      });
-    } else if (Object.keys(examples).length > 0) {
+if (Object.keys(examples).length > 0) {
       const outfits = examples['application/json'];
       const index = outfits.findIndex(outfit => outfit.name === name);
 
