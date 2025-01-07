@@ -48,9 +48,10 @@ exports.getOutfit = function (userId, name) {
 };
 
 // PUT users/{userId}/outfits/{name}
-exports.updateOutfit = function (body, _userId, name) {
+exports.updateOutfit = function (body,name) {
   return new Promise(function (resolve, reject) {
     const examples = { 'application/json': validOutfit };
+    
 
     if (Object.keys(examples).length > 0) {
       const outfits = examples['application/json'];
