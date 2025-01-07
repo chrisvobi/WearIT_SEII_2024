@@ -7,14 +7,14 @@ exports.createOutfit = function(body,userId) {
     var examples = {};
     examples['application/json'] = [];
     examples['application/json'].push(body);
-    if (userId>120) {
+    if (userId>120) {// Check if the user ID is valid (mock logic)
       reject({
         statusCode: 404,
         body: "User doesn't exist"
       })
     }
     else if (Object.keys(examples).length > 0) {
-      resolve(examples[Object.keys(examples)][0]);
+      resolve(examples[Object.keys(examples)][0]);// Return the first outfit in the examples
     }
   });
 }
@@ -44,7 +44,7 @@ exports.getOutfit = function(userId,name) {
       } ],
       "name" : "EverydayOutfit"
   },
-  {
+  { // Another outfit example
     "garments" : [ {
       "size" : "M",
       "imagePath" : "../images/CameraRoll/PIC04_12_01_2024.jpeg",
