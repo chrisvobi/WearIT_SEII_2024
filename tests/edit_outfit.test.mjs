@@ -4,7 +4,7 @@ import got from "got";
 import app from "../index.js";
 import { generateRandomID } from "../utils/random_id.js";
 
-import { validOutfit, invalidOutfit } from "../utils/outfits.js"; // valid and invalid outfits user tries to post
+import { validOutfit, invalidOutfit } from "../utils/outfits.js"; //  valid and invalid outfits user tries to post
 
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
@@ -17,9 +17,9 @@ test.after.always((t) => {
 	t.context.server.close();
 });
 
-// App has ~120 users. any id above 120 doesn't exist (no registered user yet)
-// Some tests might be ignored here (for assignment purposes) as they were tested in other files
-
+//  App has ~120 users. any id above 120 doesn't exist (no registered user yet)
+//  Some tests might be ignored here (for assignment purposes) as they were tested in other files
+ 
 // 200 resource updated, also returns the new outfit (user edited) == happy path
 test("PUT users/{userId}/outfits/{name} returns 200 and the new Outfit", async (t) => {
     const userId = generateRandomID(1, 120);
