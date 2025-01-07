@@ -65,7 +65,7 @@ exports.getOutfit = function (userId, name) {
         resolve({ body: outfits[index] });
       } else {
         reject({
-          statusCode: 404,
+          statusCode: 404,//error code
           body: "Outfit with this name doesn't exist"
         });
       }
@@ -86,7 +86,7 @@ if (Object.keys(examples).length > 0) {
         resolve({ body: examples['application/json'][index] });
       } else {
         reject({
-          statusCode: 404,
+          statusCode: 404,//error code
           body: "Outfit with this name doesn't exist"
         });
       }
@@ -113,7 +113,7 @@ exports.deleteOutfit = function (userId, name) {
         resolve({ body: "Outfit deleted successfully" });
       } else {
         reject({
-          statusCode: 404,
+          statusCode: 404,//error code
           body: "Outfit with this name doesn't exist"
         });
       }
