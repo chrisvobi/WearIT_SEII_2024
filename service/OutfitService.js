@@ -2,33 +2,6 @@
 
 const { validOutfit } = require('../utils/outfits');
 
-// Shared outfit examples
-const sharedOutfits = [
-  validOutfit, // Reference the valid outfit
-  {
-    "garments": [
-      {
-        "size": "M",
-        "imagePath": "../images/CameraRoll/PIC04_12_01_2024.jpeg",
-        "name": "GreyCrewneck",
-        "brand": "Zara"
-      },
-      {
-        "size": "M",
-        "imagePath": "../images/CameraRoll/PIC05_12_01_2024.jpeg",
-        "name": "BlackFormalPants",
-        "brand": "H&M"
-      },
-      {
-        "size": "M",
-        "imagePath": "../images/CameraRoll/PIC06_12_01_2024.jpeg",
-        "name": "WhiteAirforceShoes",
-        "brand": "Nike"
-      }
-    ],
-    "name": "CoffeeDate"
-  }
-];
 
 // POST /users/{userId}/outfit
 exports.createOutfit = function (body, userId) {
@@ -50,7 +23,7 @@ exports.createOutfit = function (body, userId) {
 // GET users/{userId}/outfits/{name}
 exports.getOutfit = function (userId, name) {
   return new Promise(function (resolve, reject) {
-    const examples = { 'application/json': sharedOutfits };
+    const examples = { 'application/json': validOutfit };
 
     if (userId > 120) {
       reject({
@@ -76,7 +49,7 @@ exports.getOutfit = function (userId, name) {
 // PUT users/{userId}/outfits/{name}
 exports.updateOutfit = function (body, userId, name) {
   return new Promise(function (resolve, reject) {
-    const examples = { 'application/json': sharedOutfits };
+    const examples = { 'application/json': validOutfit };
 
     if (Object.keys(examples).length > 0) {
       const outfits = examples['application/json'];
@@ -98,7 +71,7 @@ exports.updateOutfit = function (body, userId, name) {
 // DELETE users/{userId}/outfits/{name}
 exports.deleteOutfit = function (userId, name) {
   return new Promise(function (resolve, reject) {
-    const examples = { 'application/json': sharedOutfits };
+    const examples = { 'application/json': validOutfit };
 
     if (userId > 120) {
       reject({
