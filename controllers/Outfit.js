@@ -4,7 +4,7 @@ var utils = require('../utils/writer.js');
 var Outfit = require('../service/OutfitService');
 
 // POST users/{userId}/outfit
-module.exports.createOutfit = function createOutfit (req, res, __, body, userId) {
+module.exports.createOutfit = function createOutfit(req, res, body, userId) {
   Outfit.createOutfit(body, userId)
     .then(function (response) {
       utils.writeJson(res, response, 201);
@@ -15,7 +15,7 @@ module.exports.createOutfit = function createOutfit (req, res, __, body, userId)
 };
 
 // GET users/{userId}/outfits/{name}
-module.exports.getOutfit = function getOutfit (req, res, __, userId, name) {
+module.exports.getOutfit = function getOutfit(req, res, userId, name) {
   Outfit.getOutfit(userId, name)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -26,7 +26,7 @@ module.exports.getOutfit = function getOutfit (req, res, __, userId, name) {
 };
 
 // PUT users/{userId}/outfits/{name}
-module.exports.updateOutfit = function updateOutfit (req, res, __, body, userId, name) {
+module.exports.updateOutfit = function updateOutfit(req, res, body, userId, name) {
   Outfit.updateOutfit(body, userId, name)
     .then(function (response) {
       utils.writeJson(res, response);
@@ -37,7 +37,7 @@ module.exports.updateOutfit = function updateOutfit (req, res, __, body, userId,
 };
 
 // DELETE users/{userId}/outfits/{name}
-module.exports.deleteOutfit = function deleteOutfit (req, res,__, userId, name) {
+module.exports.deleteOutfit = function deleteOutfit(req, res, userId, name) {
   Outfit.deleteOutfit(userId, name)
     .then(function (response) {
       utils.writeJson(res, response);
