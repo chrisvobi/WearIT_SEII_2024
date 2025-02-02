@@ -15,13 +15,7 @@ test.after.always((t) => {
 	t.context.server.close();
 });
 
-/*
-Event has date:integer, day:string ,month:integer, title:string ,Outfit
-Outfit has name:string, and an array of Garment
-Garment has name:string, size:string, brand:string, imagePath:string
-*/
-
-// Say app has ~100 users so any ID above 120 doesn't exist
+// ~100 users so we have no IDs above 120
 // SOME TESTS ABOUT THE USERID MIGHT BE IGNORED AS THESE WERE TESTED IN GET_CALENDAR AND ADD_EVENT (FOR ASSIGNMENT PURPOSES)
 
 // 200 code, userId, date, eventName given all correctly

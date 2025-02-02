@@ -3,7 +3,6 @@ import test from "ava";
 import got from "got";
 import app from "../index.js";
 
-
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
     const server = t.context.server.listen();
@@ -16,6 +15,13 @@ test.after.always((t) => {
 });
 
 // User Id checks won't be repeated here, they have been implemented already in get_categories.test.mjs
+
+/**
+* Various tests for path GET /users/{userId}/categories/{categoryName}/garments
+*
+* userId = the id of the user
+* category = the category the user wants to see
+ **/
 
 // Response 200, it worked, we get all garments of category Tops of user 45 (user id 45, category Tops)
 test("GET /users/{userId}/categories/{categoryName}/garments returns correct response and status code for Tops", async (t) => {

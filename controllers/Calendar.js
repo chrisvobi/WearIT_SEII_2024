@@ -1,10 +1,10 @@
 'use strict';
 
-var utils = require('../utils/writer.js');
-var Calendar = require('../service/CalendarService');
+var utils = require('../utils/writer.js'); // Utility for sending JSON responses
+var Calendar = require('../service/CalendarService'); // Service to handle calendar-related actions
 
 // GET users/{userId}/calendar
-module.exports.getUserCalendar = function getUserCalendar (req, res, next, userId) {
+module.exports.getUserCalendar = function getUserCalendar (_, res, __, userId) {
     Calendar.getUserCalendar(userId)
       .then(function (response) {
         utils.writeJson(res, response.body, response.statusCode);
@@ -15,7 +15,7 @@ module.exports.getUserCalendar = function getUserCalendar (req, res, next, userI
   };
 
   // POST users/{userId}/calendar
-  module.exports.addUserCalendarEvent = function addUserCalendarEvent (req, res, next, body, userId) {
+  module.exports.addUserCalendarEvent = function addUserCalendarEvent (_, res, __, body, userId) {
     Calendar.addUserCalendarEvent(body, userId)
       .then(function (response) {
         utils.writeJson(res, response, 201);
@@ -26,7 +26,7 @@ module.exports.getUserCalendar = function getUserCalendar (req, res, next, userI
   };
 
   // GET users/{userId}/calendar/{date}/{eventName}
-  module.exports.getUserCalendarEvent = function getUserCalendarEvent (req, res, next, userId, date, eventName) {
+  module.exports.getUserCalendarEvent = function getUserCalendarEvent (_, res, __, userId, date, eventName) {
     Calendar.getUserCalendarEvent(userId, date, eventName)
       .then(function (response) {
         utils.writeJson(res, response);
@@ -37,7 +37,7 @@ module.exports.getUserCalendar = function getUserCalendar (req, res, next, userI
   };
 
   // PUT users/{userId}/calendar/{date}/{eventName}
-  module.exports.updateUserCalendarEvent = function updateUserCalendarEvent (req, res, next, body, userId, date, eventName) {
+  module.exports.updateUserCalendarEvent = function updateUserCalendarEvent (_, res, __, body, userId, date, eventName) {
     Calendar.updateUserCalendarEvent(body, userId, date, eventName)
       .then(function (response) {
         utils.writeJson(res, response);
@@ -48,7 +48,7 @@ module.exports.getUserCalendar = function getUserCalendar (req, res, next, userI
   };
 
   // DELETE users/{userId}/calendar/{date}/{eventName}
-  module.exports.deleteUserCalendarEvent = function deleteUserCalendarEvent (req, res, next, userId, date, eventName) {
+  module.exports.deleteUserCalendarEvent = function deleteUserCalendarEvent (_, res, __, userId, date, eventName) {
     Calendar.deleteUserCalendarEvent(userId, date, eventName)
       .then(function (response) {
         utils.writeJson(res, response);

@@ -15,16 +15,9 @@ test.after.always((t) => {
 	t.context.server.close();
 });
 
-/*
-Event has date:integer, day:string ,month:integer, title:string ,Outfit
-Outfit has name:string, and an array of Garment
-Garment has name:string, size:string, brand:string, imagePath:string
-*/
+// ~120 users
 
-// Say app has ~100 users so any ID above 120 doesn't exist
-// SOME TESTS ABOUT THE USERID MIGHT BE IGNORED AS THESE WERE TESTED IN GET_CALENDAR AND ADD_EVENT (FOR ASSIGNMENT PURPOSES)
-
-// SOME TESTS ABOUT USERID, DATE, EVENTNANE MIGHT BE IGNORED AS THESE WERE TESTED IN GET_CALENDAR, ADD_EVENT, GET_EVENT(the logic behind is the same) 
+// MOST TESTS ABOUT USERID, DATE, EVENTNANE MIGHT BE IGNORED AS THESE WERE TESTED IN GET_CALENDAR, ADD_EVENT, GET_EVENT(the logic behind is the same) 
 // (for assignment purposes)!!
 
 import {correctEvent, falseEvent, falseEvent2} from "../utils/events.js";
@@ -78,6 +71,18 @@ test("PUT users/{userId}/calendar/{date}/{eventName} returns 400 eventName not g
    });
   t.is(response.statusCode, 404);
   t.is(response.body.message, "not found");
+});
+
+// 404 because userId > 120
+test("PUT users/{userId}/calendar/{date}/{eventName} returns 404 user doesn't exist", async (t) => {
+  const userId = generateRandomID(1, 120) + 120;
+  const date = "12-01"; // date given in string format MM-DD
+  const eventName = "Morning Walk";
+  const response = await t.context.got.put(`users/${userId}/calendar/${date}/${eventName}`, { throwHttpErrors: false,
+    json: correctEvent
+   });
+  t.is(response.statusCode, 404);
+  t.is(response.body, "User doesn't exist");
 });
 
 // 400 bad request userId not integer

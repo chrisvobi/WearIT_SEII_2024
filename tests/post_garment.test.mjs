@@ -3,7 +3,6 @@ import test from "ava";
 import got from "got";
 import app from "../index.js";
 
-
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
     const server = t.context.server.listen();
@@ -16,6 +15,14 @@ test.after.always((t) => {
 });
 
 // Checks for extensive user id testing and correct category names have already been implemented in other files
+
+/**
+* Various tests for path POST /users/{userId}/categories/{categoryName}/garments
+*
+* userId = the id of the user
+* category = the category in which to put the garment
+* garment = the data of the garment to be created
+ **/
 
 // Response 200, it worked, successfully added garment to category
 test("POST /users/{userId}/categories/{categoryName}/garments with a correct garment", async (t) => {

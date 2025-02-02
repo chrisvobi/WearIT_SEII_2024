@@ -1,6 +1,6 @@
 import http from "node:http";
 import test from "ava";
-import got from "got";
+import got from "got";//imports
 import app from "../index.js";
 import { generateRandomID } from "../utils/random_id.js";
 
@@ -8,15 +8,15 @@ test.before(async (t) => {
 	t.context.server = http.createServer(app);
     const server = t.context.server.listen();
     const { port } = server.address();
-	t.context.got = got.extend({ responseType: "json", prefixUrl: `http://localhost:${port}` });
+	t.context.got = got.extend({ responseType: "json", prefixUrl: `http://localhost:${port}` });//host
 });
 
 test.after.always((t) => {
 	t.context.server.close();
 });
 
-// App has ~120 users. any id above 120 doesn't exist (no registered user yet)
-// Some tests might be ignored here (for assignment purposes) as they were tested in other files
+//   App has ~120 users. any id above 120 doesn't exist (no registered user yet)
+//   Some tests might be ignored here (for assignment purposes) as they were tested in other files
 
 // 200 code, userId, name given correctly
 test("GET users/{userId}/outfits/{name} returns correct response and status code", async (t) => {

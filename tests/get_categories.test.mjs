@@ -3,7 +3,6 @@ import test from "ava";
 import got from "got";
 import app from "../index.js";
 
-
 test.before(async (t) => {
 	t.context.server = http.createServer(app);
     const server = t.context.server.listen();
@@ -14,6 +13,14 @@ test.before(async (t) => {
 test.after.always((t) => {
 	t.context.server.close();
 });
+
+// Extensive tests for the user id are done here
+
+/**
+* Various tests for path GET /users/{userId}/categories
+*
+* userId = the id of the user
+ **/
 
 // Response 200, it worked (for user id 45)
 test("GET /users/{userId}/categories returns correct response and status code", async (t) => {

@@ -15,13 +15,7 @@ test.after.always((t) => {
 	t.context.server.close();
 });
 
-/*
-Event has date:integer, day:string ,month:integer, title:string ,Outfit
-Outfit has name:string, and an array of Garment
-Garment has name:string, size:string, brand:string, imagePath:string
-*/
-
-// Say app has ~100 users so any ID above 120 doesn't exist
+// Users are only 120 (no more register) (for assignment purposes)
 
 // Following test should return statusCode 200 and body should be an array of Events
 test("GET /users/{userId}/calendar returns correct response and status code", async (t) => {

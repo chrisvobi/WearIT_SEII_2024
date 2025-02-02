@@ -16,16 +16,10 @@ test.after.always((t) => {
 });
 
 /*
-Event has date:integer, day:string ,month:integer, title:string ,Outfit
-Outfit has name:string, and an array of Garment
-Garment has name:string, size:string, brand:string, imagePath:string
+no more than 120 users
+SOME TESTS ABOUT USERID, DATE, EVENTNANE MIGHT BE IGNORED AS THESE WERE TESTED IN GET_CALENDAR, ADD_EVENT, GET_EVENT, EDIT_EVENT(the logic behind is the same) 
+(for assignment purposes)!!
 */
-
-// Say app has ~100 users so any ID above 120 doesn't exist
-// SOME TESTS ABOUT THE USERID MIGHT BE IGNORED AS THESE WERE TESTED IN GET_CALENDAR AND ADD_EVENT (FOR ASSIGNMENT PURPOSES)
-
-// SOME TESTS ABOUT USERID, DATE, EVENTNANE MIGHT BE IGNORED AS THESE WERE TESTED IN GET_CALENDAR, ADD_EVENT, GET_EVENT, EDIT_EVENT(the logic behind is the same) 
-// (for assignment purposes)!!
 
 
 // 200 resource deleted successfully and a success message
